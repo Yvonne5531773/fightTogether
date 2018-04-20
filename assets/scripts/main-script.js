@@ -71,11 +71,12 @@ cc.Class({
 	},
 
 	initKnife (knifePrefab) {
-		console.log('initKnife knifePrefab', knifePrefab)
 		if(!knifePrefab) return
 		const knife = cc.instantiate(knifePrefab)
+		// this.movePanel.addChild(knife)
+		this.node.addChild(knife)
 		knife.getComponent("knife-script").init(this)
-		this.movePanel.addChild(knife)
+		console.log('initKnife this', this)
 	},
 
 	addTile () {

@@ -52,12 +52,12 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 0.59,
+    "_scaleY": 0.59,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 266,
-      "y": 185
+      "x": 0,
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -98,10 +98,9 @@
       "__id__": 1
     },
     "_enabled": true,
-    "bullet": null,
     "_mainScript": null,
-    "_down": false,
-    "_ms": null
+    "_self": null,
+    "_down": false
   },
   {
     "__type__": "cc.MotionStreak",

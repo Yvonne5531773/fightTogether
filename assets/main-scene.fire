@@ -231,12 +231,12 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 1.26,
+    "_scaleY": 1.92,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -198,
-      "y": -580
+      "x": 0,
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -255,7 +255,7 @@
     "_enabled": true,
     "_defaultClip": null,
     "_clips": [],
-    "playOnLoad": false
+    "playOnLoad": true
   },
   {
     "__type__": "cc.Node",

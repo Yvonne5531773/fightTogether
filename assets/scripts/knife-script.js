@@ -2,45 +2,45 @@ cc.Class({
 	extends: cc.Component,
 
 	properties: {
-		// fadeTime: 0,
-		// minSeg: 0,
-		// stroke: 0,
-		bullet: cc.Prefab,
 		_mainScript: null,
+		_self: null,
 		_down: false,
-		_ms: null
 	},
 
 	// onLoad () {},
 
 	init (mainScript) {
 		this._mainScript = mainScript
-		this.bullet.addComponent(this.getComponent('cc.MotionStreak'))
-		console.log('in knife init')
+		// const knife = this._mainScript.movePanel.getChildByName('knife')
+		const knife = this._mainScript.node.getChildByName('knife')
+		this._self = knife
+		console.log('in knife init knife', knife)
 		this._mainScript.node.on("mousedown", this.onMouseDown, this)
 		this._mainScript.node.on("mousemove", this.onMouseMove, this)
 		this._mainScript.node.on("mouseup", this.onMouseUp, this)
 	},
 
 	onMouseDown (event) {
-		console.log('onMouseDown this._ms', this._ms)
-		// const ms = this.getComponent('cc.MotionStreak')
+		console.log('onMouseDown event', event.getLocation())
+		console.log('onMouseDown this._self', this._self)
 		this._down = true
-		this.bullet.setPosition(this.node.getPosition())
-		// this._ms.setPosition(this._ms.getPosition())
+		this._self.setPosition(event.getLocation())
+		// this._self.setPosition(this._mainScript.node.getPosition())
 	},
 
 	onMouseMove (event) {
 		if(this._down) {
-			console.log('onMouseMove')
-			this.bullet.setPosition(this.node.getPosition())
-			// this._ms.setPosition(this._ms.getPosition())
+			console.log('onMouseMove event', event.getLocation())
+			console.log('onMouseMove this._self', this._self)
+			this._self.setPosition(event.getLocation())
+			// this._self.setPosition(this._mainScript.node.getPosition())
     }
 	},
 
 	onMouseUp (event) {
 		console.log('onMouseUp')
     this._down = false
+		// this._self.reset()
 	},
 
 	// update (dt) {},
