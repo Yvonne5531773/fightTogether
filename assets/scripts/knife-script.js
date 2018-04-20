@@ -21,19 +21,19 @@ cc.Class({
 	},
 
 	onMouseDown (event) {
-		console.log('onMouseDown event', event.getLocation())
-		console.log('onMouseDown this._self', this._self)
+		console.log('onMouseDown event', event.target.x)
+		console.log('onMouseDown event.getLocation()', event.getLocation())
 		this._down = true
+		// this._self.setPosition(new cc.Vec2(event.target.x, event.target.y))
 		this._self.setPosition(event.getLocation())
-		// this._self.setPosition(this._mainScript.node.getPosition())
 	},
 
 	onMouseMove (event) {
 		if(this._down) {
-			console.log('onMouseMove event', event.getLocation())
-			console.log('onMouseMove this._self', this._self)
+			console.log('onMouseMove event', event.target.x)
+			console.log('onMouseMove event.getLocation()', event.getLocation())
+			// this._self.setPosition(new cc.Vec2(event.target.x, event.target.y))
 			this._self.setPosition(event.getLocation())
-			// this._self.setPosition(this._mainScript.node.getPosition())
     }
 	},
 
