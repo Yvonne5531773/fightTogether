@@ -42,22 +42,22 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0,
+      "y": 0
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 30,
-      "height": 29
+      "width": 50,
+      "height": 50
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 0.59,
-    "_scaleY": 0.59,
+    "_scaleX": 1,
+    "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -300,
+      "y": 109
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -100,7 +100,9 @@
     "_enabled": true,
     "_mainScript": null,
     "_self": null,
-    "_down": false
+    "_ms": null,
+    "_mainNodeX": 0,
+    "_mainNodeY": 0
   },
   {
     "__type__": "cc.MotionStreak",
