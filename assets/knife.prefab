@@ -98,11 +98,12 @@
       "__id__": 1
     },
     "_enabled": true,
+    "collOffest": 100,
     "_mainScript": null,
     "_self": null,
     "_ms": null,
-    "_mainNodeX": 0,
-    "_mainNodeY": 0
+    "_mainNodeVec": null,
+    "_prePosition": null
   },
   {
     "__type__": "cc.MotionStreak",

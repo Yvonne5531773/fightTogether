@@ -1,5 +1,5 @@
 import resource from 'assets/resources/index'
-
+import enemy from './game-enemy-script'
 cc.Class({
 	extends: cc.Component,
 
@@ -13,6 +13,10 @@ cc.Class({
 		scoreLabel: cc.Label,
 		knifePrefab: cc.Prefab,
 		knifeScript: '',
+		enemy: {
+			default: null,
+			type: enemy
+		},
 		initRow: 7,
 		tileWidth: 0,
 		tileHeight: 0,
@@ -74,8 +78,8 @@ cc.Class({
 	initKnife (knifePrefab) {
 		if(!knifePrefab) return
 		const knife = cc.instantiate(knifePrefab)
-		this.movePanel.addChild(knife)
-		// this.node.addChild(knife)
+		// this.movePanel.addChild(knife)
+		this.node.addChild(knife)
 		knife.getComponent(this.knifeScript).init(this)
 	},
 

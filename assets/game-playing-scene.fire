@@ -62,20 +62,20 @@
         "__id__": 5
       },
       {
-        "__id__": 7
+        "__id__": 8
       },
       {
-        "__id__": 9
+        "__id__": 10
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 11
+        "__id__": 12
       },
       {
-        "__id__": 12
+        "__id__": 13
       }
     ],
     "_prefab": null,
@@ -195,7 +195,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "PurpleMonster",
+    "_name": "Enemy",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -206,6 +206,9 @@
     "_components": [
       {
         "__id__": 6
+      },
+      {
+        "__id__": 7
       }
     ],
     "_prefab": null,
@@ -226,8 +229,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 78,
-      "height": 67
+      "width": 200,
+      "height": 180
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -257,7 +260,7 @@
       "__uuid__": "eeb0d7e5-837c-43b9-9d8d-d216ff047bf6"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -272,6 +275,15 @@
     "_atlas": null
   },
   {
+    "__type__": "68f84Xzv21ArqD1NyCgDAHK",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 5
+    },
+    "_enabled": true
+  },
+  {
     "__type__": "cc.Node",
     "_name": "move-panel",
     "_objFlags": 0,
@@ -283,7 +295,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 8
+        "__id__": 9
       }
     ],
     "_prefab": null,
@@ -328,7 +340,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 7
+      "__id__": 8
     },
     "_enabled": true,
     "_defaultClip": null,
@@ -347,7 +359,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 10
+        "__id__": 11
       }
     ],
     "_prefab": null,
@@ -392,7 +404,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 9
+      "__id__": 10
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -434,7 +446,7 @@
     },
     "_enabled": true,
     "movePanel": {
-      "__id__": 7
+      "__id__": 8
     },
     "bluePrefab": null,
     "whitePrefab": null,
@@ -442,12 +454,15 @@
     "longPrefab": null,
     "redPrefab": null,
     "scoreLabel": {
-      "__id__": 10
+      "__id__": 11
     },
     "knifePrefab": {
       "__uuid__": "cda5785f-4c99-4b84-a16a-76cedf5ea8c2"
     },
     "knifeScript": "game-knife-script",
+    "enemy": {
+      "__id__": 7
+    },
     "initRow": 7,
     "tileWidth": 132,
     "tileHeight": 238,
