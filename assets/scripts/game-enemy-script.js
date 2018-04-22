@@ -1,15 +1,15 @@
 cc.Class({
-    extends: cc.Component,
+	extends: cc.Component,
 
-    properties: {
+	properties: {
 
-    },
+	},
 
-    // onLoad () {},
+	// onLoad () {},
 
-    start () {
+	start () {
 
-    },
+	},
 
-    // update (dt) {},
+	// update (dt) {},
 });
