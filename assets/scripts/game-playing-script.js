@@ -1,5 +1,5 @@
 import resource from 'assets/resources/index'
-import enemy from './game-enemy-script'
+
 cc.Class({
 	extends: cc.Component,
 
@@ -13,10 +13,6 @@ cc.Class({
 		scoreLabel: cc.Label,
 		knifePrefab: cc.Prefab,
 		knifeScript: '',
-		enemy: {
-			default: null,
-			type: enemy
-		},
 		initRow: 7,
 		tileWidth: 0,
 		tileHeight: 0,

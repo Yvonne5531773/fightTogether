@@ -1,15 +1,18 @@
 cc.Class({
-    extends: cc.Component,
+	extends: cc.Component,
 
-    properties: {
+	properties: {
+		enemy: {
+			default: null,
+			type: cc.Node
+		}
+	},
 
-    },
+	// onLoad () {},
 
-    // onLoad () {},
+	start () {
 
-    start () {
+	},
 
-    },
-
-    // update (dt) {},
+	// update (dt) {},
 });

@@ -62,9 +62,6 @@
         "__id__": 5
       },
       {
-        "__id__": 8
-      },
-      {
         "__id__": 10
       }
     ],
@@ -76,6 +73,9 @@
       },
       {
         "__id__": 13
+      },
+      {
+        "__id__": 14
       }
     ],
     "_prefab": null,
@@ -209,6 +209,12 @@
       },
       {
         "__id__": 7
+      },
+      {
+        "__id__": 8
+      },
+      {
+        "__id__": 9
       }
     ],
     "_prefab": null,
@@ -234,7 +240,7 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
+    "_scaleX": 1.01,
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
@@ -281,71 +287,74 @@
     "node": {
       "__id__": 5
     },
-    "_enabled": true
+    "_enabled": true,
+    "enemy": null
   },
   {
-    "__type__": "cc.Node",
-    "_name": "move-panel",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 2
-    },
-    "_children": [],
-    "_tag": -1,
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 9
-      }
-    ],
-    "_prefab": null,
-    "_id": "025f53B2BNIWJDn308jiiQU",
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_cascadeOpacityEnabled": true,
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 800,
-      "height": 800
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
-    "_position": {
-      "__type__": "cc.Vec2",
-      "x": -226,
-      "y": -395
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_localZOrder": 0,
-    "_globalZOrder": 0,
-    "_opacityModifyRGB": false,
-    "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Animation",
+    "__type__": "9bee8kACClDIbRwY+hvrg3S",
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 8
+      "__id__": 5
+    },
+    "_enabled": true
+  },
+  {
+    "__type__": "cc.PolygonCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 5
     },
     "_enabled": true,
-    "_defaultClip": null,
-    "_clips": [],
-    "playOnLoad": true
+    "tag": 1,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "points": [
+      {
+        "__type__": "cc.Vec2",
+        "x": -102,
+        "y": -17
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -78,
+        "y": -71
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": 6,
+        "y": -87
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": 79,
+        "y": -74
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": 98,
+        "y": -12
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": 71,
+        "y": 55
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -4,
+        "y": 87
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -80,
+        "y": 50
+      }
+    ]
   },
   {
     "__type__": "cc.Node",
@@ -445,9 +454,7 @@
       "__id__": 2
     },
     "_enabled": true,
-    "movePanel": {
-      "__id__": 8
-    },
+    "movePanel": null,
     "bluePrefab": null,
     "whitePrefab": null,
     "blackPrefab": null,
@@ -460,9 +467,6 @@
       "__uuid__": "cda5785f-4c99-4b84-a16a-76cedf5ea8c2"
     },
     "knifeScript": "game-knife-script",
-    "enemy": {
-      "__id__": 7
-    },
     "initRow": 7,
     "tileWidth": 132,
     "tileHeight": 238,
@@ -483,5 +487,17 @@
     "_soundArr": [],
     "_soundData": null,
     "_score": null
+  },
+  {
+    "__type__": "68f84Xzv21ArqD1NyCgDAHK",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "enemy": {
+      "__id__": 5
+    }
   }
 ]

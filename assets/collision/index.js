@@ -40,10 +40,10 @@ export default {
 			let atan = Math.atan(tan) / Math.PI * 180
 		}
 		if(atan >= 0) {
-			return 90 - atan - Constant.FRUITS[id].rota
+			return 90 - atan - rota
 		}
 		else {
-			return -(Constant.FRUITS[id].rota + 90 + atan)
+			return - (rota + 90 + atan)
 		}
 	}
 }

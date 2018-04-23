@@ -4,6 +4,7 @@ cc.Class({
 	extends: cc.Component,
 
 	properties: {
+		minDist: 0,
 		collOffest: 0,
 		_mainScript: null,
 		_self: null,
@@ -31,8 +32,8 @@ cc.Class({
 
 	onTouchMove (event) {
 		this.setPosition(event.getLocation())
-		const distance = cc.pDistance(this._prePosition, event.getLocation())
-		distance > 30 && (this.checkCollision(event.getLocation(), this._prePosition), this._prePosition = event.getLocation())
+		// const distance = cc.pDistance(this._prePosition, event.getLocation())
+		// distance > this.minDist && (this.checkCollision(event.getLocation(), this._prePosition), this._prePosition = event.getLocation())
 	},
 
 	setPosition (position) {
