@@ -11,8 +11,6 @@ cc.Class({
 		longPrefab: cc.Prefab,
 		redPrefab: cc.Prefab,
 		scoreLabel: cc.Label,
-		knifePrefab: cc.Prefab,
-		knifeScript: '',
 		initRow: 7,
 		tileWidth: 0,
 		tileHeight: 0,
@@ -32,13 +30,20 @@ cc.Class({
 		_offestY: null,
 		_soundArr: null,
 		_soundData: null,
-		_score: null
+		_score: null,
+
+		knifePrefab: cc.Prefab,
+		knifeScript: '',
+		knifeCtr: {
+			type: cc.Node,
+			default: null
+		},
 	},
 
 	onLoad () {
 		this._curBottomRow = 0;
 		this._newTopRow = 0;
-		this._startPosition = this.movePanel.position;
+		// this._startPosition = this.movePanel.position;
 		this._arr = [0, 1, 2, 3]
 		this._idx = 0
 		this._preTx = -1
@@ -74,8 +79,8 @@ cc.Class({
 	initKnife (knifePrefab) {
 		if(!knifePrefab) return
 		const knife = cc.instantiate(knifePrefab)
-		// this.movePanel.addChild(knife)
-		this.node.addChild(knife)
+		// this.node.addChild(knife)
+		this.knifeCtr.addChild(knife)
 		knife.getComponent(this.knifeScript).init(this)
 	},
 

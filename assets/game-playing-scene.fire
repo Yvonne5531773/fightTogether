@@ -15,6 +15,9 @@
     "_children": [
       {
         "__id__": 2
+      },
+      {
+        "__id__": 14
       }
     ],
     "_tag": -1,
@@ -75,7 +78,7 @@
         "__id__": 13
       },
       {
-        "__id__": 14
+        "__id__": 15
       }
     ],
     "_prefab": null,
@@ -96,7 +99,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 800,
+      "width": 600,
       "height": 800
     },
     "_rotationX": 0,
@@ -105,7 +108,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 400,
+      "x": 300,
       "y": 400
     },
     "_skewX": 0,
@@ -440,11 +443,11 @@
     "_enabled": true,
     "_designResolution": {
       "__type__": "cc.Size",
-      "width": 800,
+      "width": 600,
       "height": 800
     },
-    "_fitWidth": false,
-    "_fitHeight": true
+    "_fitWidth": true,
+    "_fitHeight": false
   },
   {
     "__type__": "4b10c5aElFJLppT19GpKPgz",
@@ -463,10 +466,6 @@
     "scoreLabel": {
       "__id__": 11
     },
-    "knifePrefab": {
-      "__uuid__": "cda5785f-4c99-4b84-a16a-76cedf5ea8c2"
-    },
-    "knifeScript": "game-knife-script",
     "initRow": 7,
     "tileWidth": 132,
     "tileHeight": 238,
@@ -486,7 +485,62 @@
     "_offestY": null,
     "_soundArr": [],
     "_soundData": null,
-    "_score": null
+    "_score": null,
+    "knifePrefab": {
+      "__uuid__": "cda5785f-4c99-4b84-a16a-76cedf5ea8c2"
+    },
+    "knifeScript": "game-knife-script",
+    "knifeCtr": {
+      "__id__": 14
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "knifeCtr",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [],
+    "_prefab": null,
+    "_id": "c10q4a1iJMwYD0TeQC3QgP",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
   },
   {
     "__type__": "68f84Xzv21ArqD1NyCgDAHK",
