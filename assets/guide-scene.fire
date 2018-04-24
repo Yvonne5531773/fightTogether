@@ -425,7 +425,7 @@
     "target": {
       "__id__": 5
     },
-    "component": "list-script",
+    "component": "guide-script",
     "handler": "toScene",
     "customEventData": ""
   },
@@ -463,9 +463,6 @@
       "__id__": 2
     },
     "_enabled": true,
-    "audio": {
-      "__uuid__": "e8af5041-179e-49ed-aef0-4dec316ee7e1"
-    },
     "_current": null
   },
   {

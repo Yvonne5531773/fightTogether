@@ -15,8 +15,8 @@ cc.Class({
 
 	init (mainScript) {
 		this._mainScript = mainScript
-		// this._self = this._mainScript.movePanel.getChildByName('knife')
-		this._self = this._mainScript.node.getChildByName('knife')
+		// this._self = this._mainScript.node.getChildByName('knife')
+		this._self = this._mainScript.knifeCtr.getChildByName('knife')
 		this._mainNodeVec = cc.v2(this._mainScript.node.getPosition())
 		this._ms = this._self.getComponent('cc.MotionStreak')
 		this._mainScript.node.on("touchstart", this.onTouchStart, this)
@@ -37,8 +37,7 @@ cc.Class({
 	},
 
 	setPosition (position) {
-		// const pos = cc.v2(position)
-		const pos = cc.v2(position).sub(this._mainNodeVec)
+		const pos = cc.v2(position)
 		this._ms.node.setPosition(pos)
 	},
 
@@ -47,11 +46,11 @@ cc.Class({
 	},
 
 	checkCollision (now, pre) {
-		const enemyPos = cc.v2(this._mainScript.enemy.node.getPosition()).add(this._mainNodeVec),
+		const enemyPos = cc.v2(this._mainScript.enemy.node.getPosition()),
+		// const enemyPos = cc.v2(this._mainScript.enemy.node.getPosition()).add(this._mainNodeVec),
 			enemyX = enemyPos.x,
 			enemyY = enemyPos.y
 		const col = collision.checkCollision(now.x, now.y, pre.x, pre.y, enemyX, enemyY, this.collOffest)
-		console.log('in checkCollision col', col)
 	},
 	// update (dt) {},
 })
