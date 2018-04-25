@@ -4,66 +4,25 @@ cc.Class({
 	extends: cc.Component,
 
 	properties: {
-		movePanel: cc.Node,
-		bluePrefab: cc.Prefab,
-		whitePrefab: cc.Prefab,
-		blackPrefab: cc.Prefab,
-		longPrefab: cc.Prefab,
-		redPrefab: cc.Prefab,
-		scoreLabel: cc.Label,
-		initRow: 7,
-		tileWidth: 0,
-		tileHeight: 0,
-		speed: 0,
-		_newTopRow: null,
-		_curBottomRow: null,
-		_startPosition: null,
-		_isFirstTile: true,
-		_start: false,
-		_end: false,
-		_idx: 0,
-		_preTx: -1,
-		_tx: -1,
-		_arr: [],
-		_tilesArr: [],
-		_errors: [],
-		_offestY: null,
-		_soundArr: null,
-		_soundData: null,
-		_score: null,
-
 		knifePrefab: cc.Prefab,
 		knifeScript: '',
 		knifeCtr: {
 			type: cc.Node,
 			default: null
 		},
+		_harmScore: 0,
+		_exceedScore: 0,
+		_timeScore: 0,
+		_timeSI: null,
 	},
 
 	onLoad () {
-		this._curBottomRow = 0;
-		this._newTopRow = 0;
-		// this._startPosition = this.movePanel.position;
-		this._arr = [0, 1, 2, 3]
-		this._idx = 0
-		this._preTx = -1
-		this._tx = -1
-		this._tilesArr = []
-		this._errors = ['ERROR_SPOT']
-		this._offestY = 0
-		this._soundArr = []
-		this._soundData = []
-		this._score = 0
-		this.scoreLabel.string = this._score
+		this.initKnife(this.knifePrefab)
 		//加载音乐文件
 		// const node = cc.director.getScene().getChildByName('data-store'),
 		// 	data = node? node.getComponent('datastore-script').getdata():{},
 		// 	songURL = data.url || ''
 		// cc.loader.loadRes(songURL, this.onLoadMusicCompleted.bind(this));
-		//添加块
-		// for (let i = 0; i <= this.initRow; i++)
-		// 	this.addTile()
-		this.initKnife(this.knifePrefab)
 	},
 
 	initSong (data) {
@@ -79,7 +38,6 @@ cc.Class({
 	initKnife (knifePrefab) {
 		if(!knifePrefab) return
 		const knife = cc.instantiate(knifePrefab)
-		// this.node.addChild(knife)
 		this.knifeCtr.addChild(knife)
 		knife.getComponent(this.knifeScript).init(this)
 	},
@@ -143,37 +101,28 @@ cc.Class({
 		this.checkWin()
 	},
 
-	setScoreLabel (score) {
-		if(!score) return
-		this.scoreLabel.string = score
-	},
-
 	checkWin() {
 		this._idx++
 		this.setScoreLabel(++this._score)
 	},
 
-	getCurrentTile() {
-		return this._tilesArr[this._curBottomRow]
-	},
-
 	update (dt) {
-		if(!this._start || this._end) return
-		this._offestY += this.speed
-		const curTile = this.getCurrentTile()
-		if (curTile && curTile.y <= 0 && !curTile._destory) {
-			this.scrollback()
-			this.showWrongBlackTile(curTile)
-			this.gameover()
-		}
-		this.movePanel.children.forEach(tile => {
-			tile.y -= this.speed
-			if (tile && tile._destory && tile.y < 0) {
-				this.destroyTile(tile)
-				this.addTile()
-				this._newTopRow++
-			}
-		})
+		// if(!this._start || this._end) return
+		// this._offestY += this.speed
+		// const curTile = this.getCurrentTile()
+		// if (curTile && curTile.y <= 0 && !curTile._destory) {
+		// 	this.scrollback()
+		// 	this.showWrongBlackTile(curTile)
+		// 	this.gameover()
+		// }
+		// this.movePanel.children.forEach(tile => {
+		// 	tile.y -= this.speed
+		// 	if (tile && tile._destory && tile.y < 0) {
+		// 		this.destroyTile(tile)
+		// 		this.addTile()
+		// 		this._newTopRow++
+		// 	}
+		// })
 	},
 
 	scrollback() {
