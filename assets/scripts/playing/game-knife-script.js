@@ -28,6 +28,7 @@ cc.Class({
 		this._ms.reset()
 		this.setPosition(event.getLocation())
 		this._prePosition = event.getLocation()
+		console.log('onTouchStart this', this)
 	},
 
 	onTouchMove (event) {

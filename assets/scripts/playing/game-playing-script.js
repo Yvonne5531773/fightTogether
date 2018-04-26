@@ -4,25 +4,30 @@ cc.Class({
 	extends: cc.Component,
 
 	properties: {
+		enemy: cc.Node,
 		knifePrefab: cc.Prefab,
+		timeLabel: cc.Label,
 		knifeScript: '',
 		knifeCtr: {
 			type: cc.Node,
 			default: null
 		},
-		_harmScore: 0,
-		_exceedScore: 0,
 		_timeScore: 0,
 		_timeSI: null,
 	},
 
 	onLoad () {
 		this.initKnife(this.knifePrefab)
+		//初始化倒计时
+		this.initCountDown(this._timeScore = 3)
 		//加载音乐文件
 		// const node = cc.director.getScene().getChildByName('data-store'),
 		// 	data = node? node.getComponent('datastore-script').getdata():{},
 		// 	songURL = data.url || ''
-		// cc.loader.loadRes(songURL, this.onLoadMusicCompleted.bind(this));
+		// cc.loader.loadRes(songURL, this.onLoadMusicCompleted.bind(this))
+
+		//开启物理系统
+		cc.director.getPhysicsManager().enabled = true
 	},
 
 	initSong (data) {
@@ -40,6 +45,24 @@ cc.Class({
 		const knife = cc.instantiate(knifePrefab)
 		this.knifeCtr.addChild(knife)
 		knife.getComponent(this.knifeScript).init(this)
+	},
+
+	initCountDown (time) {
+		this.setTimeLabel(time)
+		let count = time
+		this._timeSI = setInterval( () => {
+			count <= 0 && (clearInterval(this._timeSI), this.endGame())
+			this.setTimeLabel(count--)
+		}, 1000)
+	},
+
+	setTimeLabel (time) {
+		this.timeLabel.string = time + 's'
+	},
+
+	endGame () {
+		//停止动画
+		this.enemy.getComponent('game-enemy-script').stopAnimate()
 	},
 
 	addTile () {
@@ -106,33 +129,6 @@ cc.Class({
 		this.setScoreLabel(++this._score)
 	},
 
-	update (dt) {
-		// if(!this._start || this._end) return
-		// this._offestY += this.speed
-		// const curTile = this.getCurrentTile()
-		// if (curTile && curTile.y <= 0 && !curTile._destory) {
-		// 	this.scrollback()
-		// 	this.showWrongBlackTile(curTile)
-		// 	this.gameover()
-		// }
-		// this.movePanel.children.forEach(tile => {
-		// 	tile.y -= this.speed
-		// 	if (tile && tile._destory && tile.y < 0) {
-		// 		this.destroyTile(tile)
-		// 		this.addTile()
-		// 		this._newTopRow++
-		// 	}
-		// })
-	},
-
-	scrollback() {
-		const duraction = 1.5;
-		this.movePanel.children.forEach(child => {
-			const jumpUp = cc.moveBy(duraction, cc.p(0, this.tileHeight)).easing(cc.easeCubicActionOut());
-			child.runAction(jumpUp)
-		})
-	},
-
 	showWrongBlackTile(tile) {
 		const fadeIn = cc.fadeIn(.6).easing(cc.easeCubicActionOut()),
 			fadeOut = cc.fadeOut(.6).easing(cc.easeCubicActionOut()),
@@ -159,14 +155,6 @@ cc.Class({
 				}, this))),
 				this.gameover(this._errors[0])
 		)
-	},
-
-	destroyTile (tile) {
-		this.movePanel.removeChild(tile)
-	},
-
-	gameover (type) {
-		this._end = true
 	},
 
 	restart () {
