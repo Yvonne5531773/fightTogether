@@ -91,9 +91,6 @@
       },
       {
         "__id__": 38
-      },
-      {
-        "__id__": 39
       }
     ],
     "_prefab": null,
@@ -1533,16 +1530,5 @@
     },
     "_timeScore": 0,
     "_timeSI": null
-  },
-  {
-    "__type__": "68f84Xzv21ArqD1NyCgDAHK",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 2
-    },
-    "_enabled": true,
-    "_enemyPlay": null,
-    "HPVal": 0
   }
 ]

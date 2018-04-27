@@ -103,14 +103,15 @@
       "__id__": 1
     },
     "_enabled": true,
-    "minDist": 30,
+    "minDist": 50,
     "collOffest": 100,
     "actionAudio": "sound/action.mp3",
     "_mainScript": null,
     "_self": null,
     "_ms": null,
     "_mainNodeVec": null,
-    "_prePosition": null
+    "_prePosition": null,
+    "_audioPlayed": null
   },
   {
     "__type__": "cc.MotionStreak",

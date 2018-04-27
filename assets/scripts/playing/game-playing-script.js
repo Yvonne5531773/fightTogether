@@ -17,9 +17,10 @@ cc.Class({
 	},
 
 	onLoad () {
+		console.log('in play load')
 		this.initKnife(this.knifePrefab)
 		//初始化倒计时
-		this.initCountDown(this._timeScore = 3)
+		this.initCountDown(this._timeScore = 20)
 		//加载音乐文件
 		// const node = cc.director.getScene().getChildByName('data-store'),
 		// 	data = node? node.getComponent('datastore-script').getdata():{},

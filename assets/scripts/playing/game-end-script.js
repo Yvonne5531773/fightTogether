@@ -6,7 +6,7 @@ cc.Class({
 	},
 
 	toScene () {
-		cc.director.loadScene("game-playing-scene")
+		cc.director.loadScene("rank-scene")
 	},
 
 	// onLoad () {},

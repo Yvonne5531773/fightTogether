@@ -12,6 +12,7 @@ cc.Class({
 		_ms: null,
 		_mainNodeVec: null,
 		_prePosition: null,
+		_audioPlayed: null
 	},
 
 	init (mainScript) {
@@ -20,6 +21,7 @@ cc.Class({
 		this._self = this._mainScript.knifeCtr.getChildByName('knife')
 		this._mainNodeVec = cc.v2(this._mainScript.node.getPosition())
 		this._ms = this._self.getComponent('cc.MotionStreak')
+		//注册点击事件
 		this._mainScript.node.on("touchstart", this.onTouchStart, this)
 		this._mainScript.node.on("touchmove", this.onTouchMove, this)
 		this._mainScript.node.on("touchend", this.onTouchUp, this)
@@ -39,13 +41,13 @@ cc.Class({
 		// distance > this.minDist && (this.checkCollision(event.getLocation(), this._prePosition), this._prePosition = event.getLocation())
 	},
 
+	onTouchUp (event) {
+		this._ms.reset()
+	},
+
 	setPosition (position) {
 		const pos = cc.v2(position)
 		this._ms.node.setPosition(pos)
-	},
-
-	onTouchUp (event) {
-		this._ms.reset()
 	},
 
 	checkCollision (now, pre) {
@@ -57,7 +59,8 @@ cc.Class({
 	},
 
 	audioPlay () {
-		cc.audioEngine.play(cc.url.raw('resources/' + this.actionAudio), false, 1)
+		console.log('in audioPlay')
+		cc.audioEngine.play(cc.url.raw('resources/' + this.actionAudio), false, .5)
 	},
 	// update (dt) {},
 })
