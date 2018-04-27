@@ -194,7 +194,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "7501bebf-d9ac-4c18-a4d4-e53401d1c2fb"
+      "__uuid__": "f21f1434-58a5-4841-be73-75637b1077b6"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -1514,6 +1514,12 @@
     "_enabled": true,
     "enemy": {
       "__id__": 5
+    },
+    "normalPop": {
+      "__id__": 23
+    },
+    "lotteryPop": {
+      "__id__": 30
     },
     "knifePrefab": {
       "__uuid__": "cda5785f-4c99-4b84-a16a-76cedf5ea8c2"

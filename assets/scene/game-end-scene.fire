@@ -167,7 +167,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "8189fb15-8688-4a1f-9425-35655312bdb8"
+      "__uuid__": "fdefa025-bea8-4271-8a0a-b98a5abe83f4"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -186,7 +186,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "rank-btn",
+    "_name": "to-rank-btn",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2

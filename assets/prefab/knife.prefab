@@ -105,6 +105,7 @@
     "_enabled": true,
     "minDist": 30,
     "collOffest": 100,
+    "actionAudio": "sound/action.mp3",
     "_mainScript": null,
     "_self": null,
     "_ms": null,

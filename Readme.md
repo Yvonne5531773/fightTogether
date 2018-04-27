@@ -15,7 +15,13 @@
 ~~~
 server api
 
-测试服url
+测试服url http://10.12.32.183:8080
+测试token RlIzRIZXE3dQ6UxY0qvsiBFiROh97n95
+body {
+      "token": "RlIzRIZXE3dQ6UxY0qvsiBFiROh97n95",
+      "ts": 1524820162000,
+      "uuid": "test"
+     }
 线上服url
 
 /*  获取游戏相关信息
@@ -95,4 +101,23 @@ savePrize
 */
 getRankByUserId
 
+~~~
+
+~~~
+android api
+
+/*  进入游戏
+    @param  token
+*/
+通过url访问带 token 参数
+
+/*  返回用户界面
+    @param  null
+    @return ret
+*/
+GameMatserNative.finish()
+
+dat 打包
+远程 debug
+断网情况
 ~~~

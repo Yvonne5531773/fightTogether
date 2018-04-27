@@ -1,0 +1,8 @@
+{
+  "actionSound": {
+    "url": "musics/action.mp3"
+  },
+  "coinSound": {
+    "url": "musics/coin.mp3"
+  }
+}

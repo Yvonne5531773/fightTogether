@@ -1,4 +1,4 @@
-import collision from '../collision/index'
+import collision from '../utils/collision'
 
 cc.Class({
 	extends: cc.Component,
@@ -6,6 +6,7 @@ cc.Class({
 	properties: {
 		minDist: 0,
 		collOffest: 0,
+		actionAudio: '',
 		_mainScript: null,
 		_self: null,
 		_ms: null,
@@ -28,12 +29,13 @@ cc.Class({
 		this._ms.reset()
 		this.setPosition(event.getLocation())
 		this._prePosition = event.getLocation()
-		console.log('onTouchStart this', this)
 	},
 
 	onTouchMove (event) {
 		this.setPosition(event.getLocation())
-		// const distance = cc.pDistance(this._prePosition, event.getLocation())
+		const distance = cc.pDistance(this._prePosition, event.getLocation())
+		//划动距离超过预设值
+		distance > this.minDist && (this.audioPlay(), this._prePosition = event.getLocation())
 		// distance > this.minDist && (this.checkCollision(event.getLocation(), this._prePosition), this._prePosition = event.getLocation())
 	},
 
@@ -52,6 +54,10 @@ cc.Class({
 			enemyX = enemyPos.x,
 			enemyY = enemyPos.y
 		const col = collision.checkCollision(now.x, now.y, pre.x, pre.y, enemyX, enemyY, this.collOffest)
+	},
+
+	audioPlay () {
+		cc.audioEngine.play(cc.url.raw('resources/' + this.actionAudio), false, 1)
 	},
 	// update (dt) {},
 })
