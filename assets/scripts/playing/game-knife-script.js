@@ -12,7 +12,7 @@ cc.Class({
 		_ms: null,
 		_mainNodeVec: null,
 		_prePosition: null,
-		_audioPlayed: null
+		_audioPlayed: null,
 	},
 
 	init (mainScript) {
@@ -31,6 +31,7 @@ cc.Class({
 		this._ms.reset()
 		this.setPosition(event.getLocation())
 		this._prePosition = event.getLocation()
+		this._audioPlayed = false
 	},
 
 	onTouchMove (event) {
@@ -59,8 +60,10 @@ cc.Class({
 	},
 
 	audioPlay () {
-		console.log('in audioPlay')
-		cc.audioEngine.play(cc.url.raw('resources/' + this.actionAudio), false, .5)
+		if(!this._audioPlayed) {
+			cc.audioEngine.play(cc.url.raw('resources/' + this.actionAudio), false, .5)
+			this._audioPlayed = true
+		}
 	},
 	// update (dt) {},
 })

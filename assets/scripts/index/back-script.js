@@ -1,3 +1,5 @@
+import api from '../../resources/javascripts/api'
+
 cc.Class({
 	extends: cc.Component,
 
@@ -6,7 +8,7 @@ cc.Class({
 	},
 
 	toApp () {
-		GameMatserNative.finish()
+		api.back2App()
 	},
 
 });

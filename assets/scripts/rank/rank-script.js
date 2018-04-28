@@ -32,10 +32,12 @@ cc.Class({
 	initialize () {
 		// 获取整个列表的高度
 		this.content.height = this.totalCount * (this.itemTemplate.data.height + this.spacing) + this.spacing
+		console.log('in initialize this.content.height', this.content.height)
 		for (let i = 0; i < this.spawnCount; ++i) { // spawn items, we only need to do this once
 			let item = cc.instantiate(this.itemTemplate.data)
 			this.content.addChild(item)
-			item.setPosition(0, -item.height * (this.yOffest + i) - this.spacing * (i + 1))
+			console.log('addChild')
+			item.setPosition(0, -item.height * i - this.spacing * (i + 1) + this.yOffest)
 			item.getComponent('rank-item-script').updateItem(i, i)
 			this.items.push(item);
 		}
@@ -58,22 +60,20 @@ cc.Class({
 		let items = this.items;
 		// 如果当前content的y坐标小于上次记录值，则代表往下滚动，否则往上。
 		let isDown = this.scrollView.content.y < this.lastContentPosY
-		// console.log('update this.scrollView.content.y', this.scrollView.content.y)
-		// console.log('update this.lastContentPosY', this.lastContentPosY)
 		// 实际创建项占了多高（即它们的高度累加）
 		let offset = (this.itemTemplate.data.height + this.spacing) * items.length;
 		let newY = 0;
 		// 遍历数组，更新item的位置和显示
-		// console.log('update isDown', isDown)
 		for (let i = 0; i < items.length; ++i) {
 			let viewPos = this.getPositionInView(items[i]);
 			if (isDown) {
-				console.log('update isDown items', items)
+				console.log('isDown')
 				// 提前计算出该item的新的y坐标
 				newY = items[i].y + offset;
 				// 如果往下滚动时item已经超出缓冲矩形，且newY未超出content上边界，
 				// 则更新item的坐标（即上移了一个offset的位置），同时更新item的显示内容
 				if (viewPos.y < -this.bufferZone && newY < 0) {
+					console.log('update isDown 1')
 					items[i].setPositionY(newY);
 					let item = items[i].getComponent('rank-item-script')
 					let itemId = item.itemID - items.length
@@ -85,6 +85,10 @@ cc.Class({
 				// 如果往上滚动时item已经超出缓冲矩形，且newY未超出content下边界，
 				// 则更新item的坐标（即下移了一个offset的位置），同时更新item的显示内容
 				if (viewPos.y > this.bufferZone && newY > -this.content.height) {
+					console.log('isDown else newY', newY)
+					console.log('isDown else viewPos.y2', viewPos.y)
+					console.log('isDown else offset', offset)
+					console.log('update isDown 2 this.bufferZone', this.bufferZone)
 					items[i].setPositionY(newY);
 					let item = items[i].getComponent('rank-item-script')
 					let itemId = item.itemID + items.length
@@ -97,8 +101,8 @@ cc.Class({
 	},
 
 	addItem () {
-		this.content.height = (this.totalCount + 1) * (this.itemTemplate.data.height + this.spacing) + this.spacing; // get total content height
-		this.totalCount = this.totalCount + 1;
+		this.content.height = (this.totalCount + 1) * (this.itemTemplate.data.height + this.spacing) + this.spacing
+		this.totalCount = this.totalCount + 1
 	},
 
 	removeItem () {
@@ -106,7 +110,7 @@ cc.Class({
 			cc.error("can't remove item less than 30!");
 			return;
 		}
-		this.content.height = (this.totalCount - 1) * (this.itemTemplate.data.height + this.spacing) + this.spacing; // get total content height
+		this.content.height = (this.totalCount - 1) * (this.itemTemplate.data.height + this.spacing) + this.spacing
 		this.totalCount = this.totalCount - 1;
 	},
 
@@ -116,7 +120,6 @@ cc.Class({
 	},
 
 	scrollEvent (sender, event) {
-		console.log('scrollEvent')
 		switch(event) {
 			case 0:
 				console.log('Scroll to Top')

@@ -20,7 +20,7 @@ cc.Class({
 	},
 
 	updateItem: function(tmplId, itemId) {
-		console.log('in updateItem')
+		console.log('updateItem tmplId', tmplId)
 		this.itemID = itemId;
 		this.label.string = 'Tmpl#' + tmplId + ' Item#' + itemId;
 	},

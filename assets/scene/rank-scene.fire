@@ -683,7 +683,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 426,
-      "height": 773
+      "height": 613
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -691,8 +691,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 3,
-      "y": -64
+      "x": 2,
+      "y": 16
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -739,7 +739,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 426,
-      "height": 773
+      "height": 613
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -795,8 +795,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 450
+      "x": -4,
+      "y": 269
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -863,7 +863,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 12,
-      "height": 773
+      "height": 613
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1083,9 +1083,9 @@
       "__id__": 23
     },
     "spawnCount": 20,
-    "totalCount": 50,
-    "spacing": 5,
-    "yOffest": 1
+    "totalCount": 20,
+    "spacing": 2,
+    "yOffest": -70
   },
   {
     "__type__": "cc.Widget",
