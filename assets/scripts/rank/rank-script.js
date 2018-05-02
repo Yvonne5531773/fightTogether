@@ -1,3 +1,5 @@
+const ranks = require('rank')
+
 cc.Class({
 	extends: cc.Component,
 
@@ -6,41 +8,67 @@ cc.Class({
 			default: null,
 			type: cc.Prefab
 		},
+		currentTemplate: {
+			default: null,
+			type: cc.Node
+		},
 		scrollView: {
 			default: null,
 			type: cc.ScrollView
 		},
-		spawnCount: 0, // 实际创建的项数量
-		totalCount: 0, // 在列表中显示的项数量
-		spacing: 0,    // 项之间的间隔大小
+		spacing: 0,       //  项之间的间隔大小
+		maxCount: 0,      //  最大数量
+		minCount: 0,      //  最小数量
 		yOffest: 0,
+		addCount: 0,
+		_totalCount: 0,   //  在列表中显示的项数量
+		_addCount: 0,
+		_vm: null
 	},
 
 	onLoad () {
-		this.content = this.scrollView.content;
-		this.items = []; // 存储实际创建的项数组
-		this.initialize();
-		this.updateTimer = 0;
-		this.updateInterval = 0.2;
+		this.content = this.scrollView.content
+		this.items = [] // 存储实际创建的项数组
+		this.initialize()
+		this.updateTimer = 0
+		this.updateInterval = 0.2
 		// 使用这个变量来判断滚动操作是向上还是向下
-		this.lastContentPosY = 0;
+		this.lastContentPosY = 0
 		// 设定缓冲矩形的大小为实际创建项的高度累加，当某项超出缓冲矩形时，则更新该项的显示内容
-		this.bufferZone = this.spawnCount * (this.itemTemplate.data.height + this.spacing) / 2;
+		// 若数据的总高度小于设定的scrollview高度，则缓冲区高度用总高度
+		const totalHeight = this._totalCount* (this.itemTemplate.data.height + this.spacing)
+		this.bufferZone = totalHeight > this.scrollView.node.height? totalHeight/ 2 : totalHeight
+		// 当前用户
 	},
 
 	// 列表初始化
 	initialize () {
+		this._vm = this.getItem(0, this.minCount)
+		if (this._vm && this._vm.length < this.minCount) {
+			this._totalCount = this._vm.length
+		} else {
+			this._totalCount = this.minCount
+		}
 		// 获取整个列表的高度
-		this.content.height = this.totalCount * (this.itemTemplate.data.height + this.spacing) + this.spacing
-		console.log('in initialize this.content.height', this.content.height)
-		for (let i = 0; i < this.spawnCount; ++i) { // spawn items, we only need to do this once
+		// console.log('this._vm', this._vm)
+		// console.log('this._totalCount', this._totalCount)
+		this.content.height = this._totalCount * (this.itemTemplate.data.height + this.spacing) + this.spacing
+		for (let i = 0; i < this._totalCount; ++i) {
 			let item = cc.instantiate(this.itemTemplate.data)
 			this.content.addChild(item)
-			console.log('addChild')
 			item.setPosition(0, -item.height * i - this.spacing * (i + 1) + this.yOffest)
-			item.getComponent('rank-item-script').updateItem(i, i)
+			item.getComponent('rank-item-script').updateItem(this._vm[i], i)
 			this.items.push(item);
 		}
+		this.initCurrent({
+			name: 'currentusercurrentusercurrentuser'
+		})
+	},
+
+	initCurrent (data) {
+		if (!data) return
+		const current = this.currentTemplate
+		current.getComponent('rank-item-script').updateItem(data, -1)
 	},
 
 	// 返回item在ScrollView空间的坐标值
@@ -52,6 +80,7 @@ cc.Class({
 
 	// 每帧调用一次。根据滚动位置动态更新item的坐标和显示(所以spawnCount可以比totalCount少很多)
 	update (dt) {
+		if (this._totalCount < this.minCount) return
 		this.updateTimer += dt;
 		if (this.updateTimer < this.updateInterval) {
 			return
@@ -67,32 +96,39 @@ cc.Class({
 		for (let i = 0; i < items.length; ++i) {
 			let viewPos = this.getPositionInView(items[i]);
 			if (isDown) {
-				console.log('isDown')
 				// 提前计算出该item的新的y坐标
 				newY = items[i].y + offset;
 				// 如果往下滚动时item已经超出缓冲矩形，且newY未超出content上边界，
 				// 则更新item的坐标（即上移了一个offset的位置），同时更新item的显示内容
 				if (viewPos.y < -this.bufferZone && newY < 0) {
-					console.log('update isDown 1')
-					items[i].setPositionY(newY);
+					items[i].setPositionY(newY)
 					let item = items[i].getComponent('rank-item-script')
 					let itemId = item.itemID - items.length
-					item.updateItem(i, itemId)
+					console.log('before update itemId', itemId)
+					item.updateItem(this._vm[itemId], itemId)
 				}
 			} else {
+				// 滚动条往下
 				// 提前计算出该item的新的y坐标
-				newY = items[i].y - offset;
+				newY = items[i].y - offset
+				// 判断是否要获取新的数据
 				// 如果往上滚动时item已经超出缓冲矩形，且newY未超出content下边界，
 				// 则更新item的坐标（即下移了一个offset的位置），同时更新item的显示内容
-				if (viewPos.y > this.bufferZone && newY > -this.content.height) {
-					console.log('isDown else newY', newY)
-					console.log('isDown else viewPos.y2', viewPos.y)
-					console.log('isDown else offset', offset)
-					console.log('update isDown 2 this.bufferZone', this.bufferZone)
-					items[i].setPositionY(newY);
-					let item = items[i].getComponent('rank-item-script')
-					let itemId = item.itemID + items.length
-					item.updateItem(i, itemId)
+				if (viewPos.y > this.bufferZone) {
+					if (this._addCount <= 0 && this._totalCount < this.maxCount) {
+						const addData = this.getItem(this._vm.length, this._vm.length + this.addCount)
+						if (addData && addData.length <= 0) return
+						this._vm = this._vm.concat(addData)
+						this.addItem(addData.length)
+						this._addCount = addData.length
+					}
+					if (newY > -this.content.height) {
+						items[i].setPositionY(newY)
+						let item = items[i].getComponent('rank-item-script')
+						let itemId = item.itemID + items.length
+						item.updateItem(this._vm[itemId], itemId)
+						this._addCount--
+					}
 				}
 			}
 		}
@@ -100,18 +136,18 @@ cc.Class({
 		this.lastContentPosY = this.scrollView.content.y
 	},
 
-	addItem () {
-		this.content.height = (this.totalCount + 1) * (this.itemTemplate.data.height + this.spacing) + this.spacing
-		this.totalCount = this.totalCount + 1
+	getItem (min, max) {
+		return ranks.data.slice(min, max)
+	},
+
+	addItem (count) {
+		this.content.height = (this._totalCount + count) * (this.itemTemplate.data.height + this.spacing) + this.spacing
+		this._totalCount += count
 	},
 
 	removeItem () {
-		if (this.totalCount - 1 < 30) {
-			cc.error("can't remove item less than 30!");
-			return;
-		}
-		this.content.height = (this.totalCount - 1) * (this.itemTemplate.data.height + this.spacing) + this.spacing
-		this.totalCount = this.totalCount - 1;
+		this.content.height = (this._totalCount - 1) * (this.itemTemplate.data.height + this.spacing) + this.spacing
+		this._totalCount = this._totalCount - 1;
 	},
 
 	scrollToFixedPosition () {

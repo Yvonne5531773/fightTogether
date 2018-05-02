@@ -12,6 +12,7 @@ cc.Class({
 		// const url = 'song.json'
 		// this._current = 0
 		// cc.loader.loadRes(url, this.onCompleted.bind(this))
+		console.log('index onLoad')
 		const criteria = {
 			path: '/v1/user/info',
 			data: {

@@ -1,5 +1,3 @@
-// import md5 from './md5'
-// import { worker } from './worker'
 const md5 = require('md5')
 const worker = require('worker')
 
