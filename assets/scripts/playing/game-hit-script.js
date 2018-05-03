@@ -25,6 +25,7 @@ cc.Class({
 		_kcoinPool: null,
 		_kcoinArray: null,
 		_initPoolCount: 10,
+		_randomRange: 0
 	},
 
 	onLoad () {
@@ -35,6 +36,8 @@ cc.Class({
 		this._attack = this.getAttack()
 		this._HP = this.getHP()
 		this._kcoinArray = []
+		//金币x坐标随机范围
+		this._randomRange = 100
 	},
 
 	onEnable () {
@@ -115,16 +118,15 @@ cc.Class({
 
 	createKcoin (position) {
 		if(!position) return
-		let kcoin = null
-		if (this._kcoinPool && this._kcoinPool.size() > 0) {
-			kcoin = this._kcoinPool.get()
-		} else {
-			kcoin = cc.instantiate(this.kcoin)
-		}
-		const	kcoinAnim = kcoin.getComponent(cc.Animation)
+		let kcoin = this._kcoinPool && this._kcoinPool.size() > 0? this._kcoinPool.get() : cc.instantiate(this.kcoin)
 		this.knifeCtr.addChild(kcoin)
 		kcoin.setPosition(cc.v2(position))
-		kcoinAnim && (kcoinAnim.play('gold'))
+		// const	kcoinAnim = kcoin.getComponent(cc.Animation)
+		// kcoinAnim && (kcoinAnim.play('gold'))
+		console.log('createKcoin kcoin getPosition', kcoin.getPosition())
+		// this.emitTo(kcoin.getComponent('cc.RigidBody'), cc.v2(position))
+		const x = Math.round(Math.random()* this._randomRange)* (Math.random()>0.5? 1:-1)
+		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
 		this._kcoinArray.push(kcoin)
 	},
 
@@ -147,6 +149,20 @@ cc.Class({
 	setHP (val) {
 		const progressBar = this.progressBar.getComponent('cc.ProgressBar')
 		progressBar.progress = val
+	},
+
+	emitTo (body, target) {
+		let x = target.x,
+			y = target.y,
+			selfX = this.node.x,
+			selfY = this.node.y,
+			distance = Math.sqrt((x-selfX)*(x-selfX) + (y-selfY)*(y-selfY)),
+			velocity = cc.v2(x-selfX, y-selfY)
+		velocity.normalizeSelf()
+		velocity.mulSelf(distance* 2)
+		console.log('emitTo velocity', velocity)
+		console.log('emitTo distance', distance)
+		body.linearVelocity = velocity
 	},
 
 	update (dt) {

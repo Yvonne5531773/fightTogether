@@ -20,12 +20,12 @@ cc.Class({
 		console.log('in play load')
 		this.initKnife(this.knifePrefab)
 		//初始化倒计时
-		this.initCountDown(this._timeScore = 20)
+		this.initCountDown(this._timeScore = 200)
 		//加载音乐文件
 		// const node = cc.director.getScene().getChildByName('data-store'),
 		// 	data = node? node.getComponent('datastore-script').getdata():{},
-		const configUrl = 'config.json'
-		cc.loader.loadRes(configUrl, this.onLoadCompleted.bind(this))
+		// const configUrl = 'config.json'
+		// cc.loader.loadRes(configUrl, this.onLoadCompleted.bind(this))
 
 		//开启物理系统
 		cc.director.getPhysicsManager().enabled = true
@@ -63,6 +63,7 @@ cc.Class({
 		//停止动画
 		this.enemy.getComponent('game-enemy-script').stopAnimate()
 		//结束弹框
+		console.log('this.normalPop', this.normalPop)
 		this.normalPop && (this.normalPop.active = true)
 		//刀刃释放
 		this.knifeCtr.destroy()

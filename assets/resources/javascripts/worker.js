@@ -1,5 +1,4 @@
-// import workerize from './workerize.min'
-const workerize = require('assets/resources/javascripts/workerize')
+const workerize = require('workerize')
 
 const getWork = workerize(`
 	export function work(url, data, authorization, type, method) {

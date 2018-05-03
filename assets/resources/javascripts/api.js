@@ -13,8 +13,6 @@ const fetch = ({
                }) => {
 	const authorization = md5.hex_hmac_md5(key, JSON.stringify(data)),
 		url = server + path
-	console.log('fetch key', key)
-	console.log('fetch JSON.stringify(data)', JSON.stringify(data))
 	console.log('fetch authorization', authorization)
 	return worker.getWork.work(url, data, authorization, type, method)
 }

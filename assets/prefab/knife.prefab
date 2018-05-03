@@ -121,9 +121,9 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_fadeTime": 0.3,
-    "_minSeg": 3,
-    "_stroke": 10,
+    "_fadeTime": 0.7,
+    "_minSeg": 10,
+    "_stroke": 15,
     "_texture": {
       "__uuid__": "3bf3e176-9f55-4a24-97ac-3293ec465cd4"
     },
