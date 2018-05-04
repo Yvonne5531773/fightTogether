@@ -123,11 +123,15 @@ cc.Class({
 		kcoin.setPosition(cc.v2(position))
 		// const	kcoinAnim = kcoin.getComponent(cc.Animation)
 		// kcoinAnim && (kcoinAnim.play('gold'))
-		console.log('createKcoin kcoin getPosition', kcoin.getPosition())
-		// this.emitTo(kcoin.getComponent('cc.RigidBody'), cc.v2(position))
+		console.log('createKcoin kcoin', kcoin)
+		// let collider = kcoin.addComponent(cc.PhysicsCircleCollider);
+		// collider.density = 1;
+		// collider.restitution = 0.4;
+		// collider.friction = 0.5;
+		// collider.radius = r;
+		this._kcoinArray.push(kcoin)
 		const x = Math.round(Math.random()* this._randomRange)* (Math.random()>0.5? 1:-1)
 		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
-		this._kcoinArray.push(kcoin)
 	},
 
 	destoryKcoin (kcoin) {

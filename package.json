@@ -1,0 +1,16 @@
+{
+  "name": "FightTogether",
+  "version": "0.0.1",
+  "author": "Cain Li <lizihao@cmcm.com>",
+  "scripts": {
+    "build": "build-pack"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
+}
