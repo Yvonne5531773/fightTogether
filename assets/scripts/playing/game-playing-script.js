@@ -12,31 +12,29 @@ cc.Class({
 			type: cc.Node,
 			default: null
 		},
+		_vm: null,
 		_timeScore: 0,
-		_timeSI: null,
+		_exceedMap: null,
 	},
 
 	onLoad () {
-		console.log('in play load')
+		// 获取数据
+		this._vm = this.getData()
+		// 敌人信息
+		this._vm && this.setEnemy(this._vm.enemy)
+		// 初始化武器
 		this.initKnife(this.knifePrefab)
-		//初始化倒计时
+		// 初始化倒计时
 		this.initCountDown(this._timeScore = 200)
+		// 开启物理系统
+		cc.director.getPhysicsManager().enabled = true
+		// 初始化超过人数表
+		this.initExcees()
 		//加载音乐文件
 		// const node = cc.director.getScene().getChildByName('data-store'),
 		// 	data = node? node.getComponent('datastore-script').getdata():{},
 		// const configUrl = 'config.json'
 		// cc.loader.loadRes(configUrl, this.onLoadCompleted.bind(this))
-
-		//开启物理系统
-		cc.director.getPhysicsManager().enabled = true
-	},
-
-	onLoadCompleted (err, res) {
-		if(err) {
-			console.log('error: ', err)
-			return
-		}
-		console.log('onLoadCompleted res', res)
 	},
 
 	initKnife (knifePrefab) {
@@ -49,14 +47,43 @@ cc.Class({
 	initCountDown (time) {
 		this.setTimeLabel(time)
 		let count = time
-		this._timeSI = setInterval( () => {
-			count <= 0 && (clearInterval(this._timeSI), this.endGame())
+		this.countdown = function () {
+			if (count <= 0) {
+				this.endGame()
+				this.unschedule(this.countdown, this);
+			}
 			this.setTimeLabel(count--)
-		}, 1000)
+		}
+		this.schedule(this.countdown, 1, cc.macro.REPEAT_FOREVER, 0)
+	},
+
+	initExcees () {
+		// 已攻击人数+手速+暴击次数+造成伤害
+		// this._exceedMap = new Map([[.02, ], [], [], []])
+	},
+
+	getData () {
+		const node = cc.director.getScene().getChildByName('data-store')
+		if(!node) return
+		const data = node.getComponent('datastore-script') && node.getComponent('datastore-script').getdata()
+		return cc.clone(data)
 	},
 
 	setTimeLabel (time) {
 		this.timeLabel.string = time + 's'
+	},
+
+	setEnemy (data) {
+		if(!data) return
+		const name = this.enemy.getChildByName('name'),
+			bar = this.enemy.getChildByName('HP-bar'),
+			hp = this.enemy.getChildByName('HP-val'),
+			nameStr = name? name.getComponent('cc.Label') : null,
+			hpBarVal = bar? bar.getComponent('cc.ProgressBar') : null,
+			hpVal = hp? hp.getComponent('cc.Label') : null
+		nameStr && (nameStr.string = data.name)
+		hpBarVal && (hpBarVal.progress = data.hp/data.hp_max)
+		hpVal && (data.hp_max>=data.hp) && (hpVal.string = Math.floor(data.hp/10000)+'HP/' + Math.floor(data.hp_max/10000)+'HP')
 	},
 
 	endGame () {
@@ -78,8 +105,12 @@ cc.Class({
 		cc.director.loadScene("game-end-scene")
 	},
 
-	restart () {
-		cc.director.loadScene("main-scene")
+	onLoadCompleted (err, res) {
+		if(err) {
+			console.log('error: ', err)
+			return
+		}
+		console.log('onLoadCompleted res', res)
 	},
 
 });

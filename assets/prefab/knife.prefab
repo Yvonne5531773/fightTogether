@@ -59,8 +59,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -312,
-      "y": 65
+      "x": -304,
+      "y": 72
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -77,9 +77,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "bd25fa95-6a2d-44d5-afdf-077ff50f5fe0"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -121,7 +119,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_fadeTime": 0.7,
+    "_fadeTime": 0.3,
     "_minSeg": 10,
     "_stroke": 15,
     "_texture": {

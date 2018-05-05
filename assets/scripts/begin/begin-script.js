@@ -7,16 +7,17 @@ cc.Class({
 	extends: cc.Component,
 
 	properties: {
-
+		_vm: {}
 	},
 
-	onLoad () {
-		this.getInfo()
-		// if (info.data && info.data.user_game_info.newcoming === 0) {
-		// 	cc.director.loadScene("guide-scene")
-		// }else {
-		// 	cc.director.loadScene("index-scene")
-		// }
+	async onLoad () {
+		const res = await this.getInfo()
+		if(!res) return
+		this._vm = cc.clone(res.data)
+		// 存储数据
+		this.storeData()
+		// 导向场景
+		this.toScene()
   },
 
 	async getInfo () {
@@ -30,8 +31,24 @@ cc.Class({
 			type: 'POST',
 			method: 'fetch'
 		}
-		const res = await api.fetch(criteria)
-		console.log('onLoad res', res)
+		return await api.fetch(criteria)
+	},
+
+	toScene () {
+		if(!this._vm.user_game_info) return
+		let scene = ''
+		if (this._vm.user_game_info.newcoming === 0) {
+			// scene = "guide-scene"
+			scene = "index-scene"
+		}else {
+			scene = "index-scene"
+		}
+		cc.director.loadScene(scene)
+	},
+
+	storeData () {
+		const node = cc.find('data-store').getComponent('datastore-script')
+		node.setdata(this._vm)
 	}
 
 });

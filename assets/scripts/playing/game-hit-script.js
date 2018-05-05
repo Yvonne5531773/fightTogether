@@ -51,8 +51,8 @@ cc.Class({
 	onCollisionEnter (other, self) {
 		if (self.tag === 1) {
 			const hitPosition = other.node.getPosition()
-			console.log('onCollisionEnter other', other)
-			console.log('onCollisionEnter hitPosition', hitPosition)
+			//敌人受伤状态
+			this.enemy.getComponent('game-enemy-script').animate(2)
 			//显示伤害值
 			this.createHarmNum(this.harmNum)
 			//血条减少
@@ -64,6 +64,12 @@ cc.Class({
 			//氪币掉落
 			this.createKcoin(hitPosition)
 		}
+	},
+
+	//受伤动画结束
+	onHarmedAniCompleted () {
+		console.log('onHarmedAniCompleted')
+		this.enemy.getComponent('game-enemy-script').animate(1)
 	},
 
 	initPool () {
