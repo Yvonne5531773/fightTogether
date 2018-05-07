@@ -1,4 +1,5 @@
 const ranks = require('rank')
+const MenuSidebar = require('menu-sidebar-script')
 
 cc.Class({
 	extends: cc.Component,
@@ -18,6 +19,7 @@ cc.Class({
 		},
 		titleTopTab: cc.Node,
 		totalTopTab: cc.Node,
+		sidebar: MenuSidebar,
 		spacing: 0,       //  项之间的间隔大小
 		maxCount: 0,      //  最大数量
 		minCount: 0,      //  最小数量
@@ -43,6 +45,8 @@ cc.Class({
 		// 当前用户
 
 		console.log('this.titleTopTab', this.titleTopTab.getComponent(cc.Button))
+		console.log('this.sidebar', this.sidebar)
+		this.sidebar.init(this)
 	},
 
 	// 列表初始化
