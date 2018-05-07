@@ -673,6 +673,7 @@
     },
     "_enabled": true,
     "_enemyPlay": null,
+    "_attackNum": 0,
     "HPVal": 100
   },
   {
@@ -711,7 +712,10 @@
     "_kcoinPool": null,
     "_kcoinArray": null,
     "_initPoolCount": 10,
-    "_randomRange": 0
+    "_randomRange": 0,
+    "_attackNum": 0,
+    "_exceedNum": 0,
+    "_exceedMap": null
   },
   {
     "__type__": "cc.Node",
@@ -2111,6 +2115,6 @@
     },
     "_vm": null,
     "_timeScore": 0,
-    "_timeSI": null
+    "_boomCount": 0
   }
 ]

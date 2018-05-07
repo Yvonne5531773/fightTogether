@@ -3,6 +3,7 @@ cc.Class({
 
 	properties: {
 		_enemyPlay: null,
+		_attackNum: 0,
 		HPVal: 0
 	},
 
@@ -33,8 +34,18 @@ cc.Class({
 		return this.HPVal
 	},
 
+	getAttackNum () {
+		return this._attackNum
+	},
+
 	setHP (val) {
 		this.HPVal = val
+	},
+
+	setAttackNum (num) {
+		if (!num) return
+		this._attackNum = num
+		console.log('setAttackNum num', num)
 	},
 
 	stopAnimate () {

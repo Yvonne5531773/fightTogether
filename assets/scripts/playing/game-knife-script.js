@@ -13,14 +13,17 @@ cc.Class({
 		_mainNodeVec: null,
 		_prePosition: null,
 		_audioPlayed: null,
+		_now: null,
+		_isMoving: null,
+		_scratchSpeed: null
 	},
 
 	init (mainScript) {
 		this._mainScript = mainScript
-		// this._self = this._mainScript.node.getChildByName('knife')
 		this._self = this._mainScript.knifeCtr.getChildByName('knife')
 		this._mainNodeVec = cc.v2(this._mainScript.node.getPosition())
 		this._ms = this._self.getComponent('cc.MotionStreak')
+		this._isMoving = false
 		//注册点击事件
 		this._mainScript.node.on("touchstart", this.onTouchStart, this)
 		this._mainScript.node.on("touchmove", this.onTouchMove, this)
@@ -38,17 +41,38 @@ cc.Class({
 		this.setPosition(event.getLocation())
 		const distance = cc.pDistance(this._prePosition, event.getLocation())
 		//划动距离超过预设值
-		distance > this.minDist && (this.audioPlay(), this._prePosition = event.getLocation())
+		distance > this.minDist && (this.audioPlay(), this._prePosition = event.getLocation(), this.calScratchSpeed(distance))
 		// distance > this.minDist && (this.checkCollision(event.getLocation(), this._prePosition), this._prePosition = event.getLocation())
+		!this._isMoving && (this._now = Date.parse(new Date()))
+		this._isMoving = true
 	},
 
 	onTouchUp (event) {
 		this._ms.reset()
+		this._isMoving = false
 	},
 
 	setPosition (position) {
 		const pos = cc.v2(position)
 		this._ms.node.setPosition(pos)
+	},
+
+	setScratchSpeed (speed) {
+		this._scratchSpeed = speed
+	},
+
+	getScratchSpeed () {
+		return Math.floor(this._scratchSpeed)
+	},
+
+	calScratchSpeed (distance) {
+		const pre = this._now,
+			now = Date.parse(new Date()),
+			diff = pre < now? Math.floor((now-pre)/1000) : 1,
+			speed = distance/diff
+		this.setScratchSpeed(speed)
+		this._isMoving = false
+		console.log('calScratchSpeed speed', speed)
 	},
 
 	checkCollision (now, pre) {

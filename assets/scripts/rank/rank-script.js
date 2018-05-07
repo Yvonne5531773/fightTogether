@@ -16,6 +16,8 @@ cc.Class({
 			default: null,
 			type: cc.ScrollView
 		},
+		titleTopTab: cc.Node,
+		totalTopTab: cc.Node,
 		spacing: 0,       //  项之间的间隔大小
 		maxCount: 0,      //  最大数量
 		minCount: 0,      //  最小数量
@@ -39,6 +41,8 @@ cc.Class({
 		const totalHeight = this._totalCount* (this.itemTemplate.data.height + this.spacing)
 		this.bufferZone = totalHeight > this.scrollView.node.height? totalHeight/ 2 : totalHeight
 		// 当前用户
+
+		console.log('this.titleTopTab', this.titleTopTab.getComponent(cc.Button))
 	},
 
 	// 列表初始化
@@ -50,8 +54,6 @@ cc.Class({
 			this._totalCount = this.minCount
 		}
 		// 获取整个列表的高度
-		// console.log('this._vm', this._vm)
-		// console.log('this._totalCount', this._totalCount)
 		this.content.height = this._totalCount * (this.itemTemplate.data.height + this.spacing) + this.spacing
 		for (let i = 0; i < this._totalCount; ++i) {
 			let item = cc.instantiate(this.itemTemplate.data)
@@ -152,7 +154,7 @@ cc.Class({
 
 	scrollToFixedPosition () {
 		// 在2秒内完成
-		this.scrollView.scrollToOffset(cc.p(0, 500), 2);
+		this.scrollView.scrollToOffset(cc.p(0, 500), 2)
 	},
 
 	scrollEvent (sender, event) {

@@ -14,7 +14,7 @@ cc.Class({
 		},
 		_vm: null,
 		_timeScore: 0,
-		_exceedMap: null,
+		_boomCount: 0,
 	},
 
 	onLoad () {
@@ -28,8 +28,6 @@ cc.Class({
 		this.initCountDown(this._timeScore = 200)
 		// 开启物理系统
 		cc.director.getPhysicsManager().enabled = true
-		// 初始化超过人数表
-		this.initExcees()
 		//加载音乐文件
 		// const node = cc.director.getScene().getChildByName('data-store'),
 		// 	data = node? node.getComponent('datastore-script').getdata():{},
@@ -50,16 +48,11 @@ cc.Class({
 		this.countdown = function () {
 			if (count <= 0) {
 				this.endGame()
-				this.unschedule(this.countdown, this);
+				this.unschedule(this.countdown, this)
 			}
 			this.setTimeLabel(count--)
 		}
 		this.schedule(this.countdown, 1, cc.macro.REPEAT_FOREVER, 0)
-	},
-
-	initExcees () {
-		// 已攻击人数+手速+暴击次数+造成伤害
-		// this._exceedMap = new Map([[.02, ], [], [], []])
 	},
 
 	getData () {
@@ -84,6 +77,9 @@ cc.Class({
 		nameStr && (nameStr.string = data.name)
 		hpBarVal && (hpBarVal.progress = data.hp/data.hp_max)
 		hpVal && (data.hp_max>=data.hp) && (hpVal.string = Math.floor(data.hp/10000)+'HP/' + Math.floor(data.hp_max/10000)+'HP')
+		console.log('setEnemy this.enemy', this.enemy)
+		console.log('setEnemy data', data)
+		this.enemy.getComponent('game-enemy-script').setAttackNum(data.attack_user_num)
 	},
 
 	endGame () {

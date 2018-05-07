@@ -25,17 +25,23 @@ cc.Class({
 		_kcoinPool: null,
 		_kcoinArray: null,
 		_initPoolCount: 10,
-		_randomRange: 0
+		_randomRange: 0,
+		_attackNum: 0,
+		_exceedNum: 0,
+		_exceedMap: null,
 	},
 
 	onLoad () {
 		this.setHarmLabel(this._harmScore)
-		this.setExceedLabel(this._exceedScore)
+		// 初始化超过人数表
+		this.initExcees()
+		this.setExceedLabel()
 		//初始化对象池
 		this.initPool()
 		this._attack = this.getAttack()
 		this._HP = this.getHP()
 		this._kcoinArray = []
+		this._exceedNum = 0
 		//金币x坐标随机范围
 		this._randomRange = 100
 	},
@@ -61,6 +67,8 @@ cc.Class({
 			//造成伤害
 			this._harm += this._attack
 			this.setHarmLabel(this._harm)
+			//显示超越数值
+			this.setExceedLabel()
 			//氪币掉落
 			this.createKcoin(hitPosition)
 		}
@@ -72,6 +80,12 @@ cc.Class({
 		this.enemy.getComponent('game-enemy-script').animate(1)
 	},
 
+	initExcees () {
+		// 手速+暴击次数
+		this._exceedMap = new Map([[.005, 55],[.01, 70],[.015, 80],[.02, 100],[.03, 130],[.04, 150],[.05, 170],[.06, 205], [.07, 245], [.08, 280], [.09, 300]])
+		this._attackNum = 100
+	},
+
 	initPool () {
 		this._harmNumPool = new cc.NodePool()
 		this._kcoinPool = new cc.NodePool()
@@ -81,7 +95,6 @@ cc.Class({
 			this._harmNumPool.put(harmNum)
 			this._kcoinPool.put(kcoin)
 		}
-		console.log('this._harmNumPool', this._harmNumPool)
 	},
 
 	setHarmLabel (num) {
@@ -89,9 +102,26 @@ cc.Class({
 		this.harmLabel.string = '造成伤害' + Math.floor(num)
 	},
 
-	setExceedLabel (num) {
-		if(!num) return
-		this.exceedLabel.string = '已超过' + Math.floor(num) + '名超人'
+	setExceedLabel () {
+		if (this._attackNum <= 0) {
+			this.exceedLabel.string = '是本次首战超人!'
+			return
+		}
+		const knife = this.knifeCtr.getChildByName('knife').getComponent('game-knife-script'),
+			ss = knife? knife.getScratchSpeed() : 0
+		let num = 0,
+			percent = 0,
+			threshold = this.getThreshold(this._exceedNum/this._attackNum)
+		for (let item of this._exceedMap.entries()) {
+			if (ss >= item[1]) {
+				percent = item[0]
+			}
+		}
+		num = this._attackNum>1? (this._attackNum>=100? Math.floor(this._attackNum* percent):this._attackNum* percent): (percent>.06? 1:0)
+		this._exceedNum += num* threshold
+		console.log('this._attackNum', this._attackNum)
+		console.log('this._exceedNum', this._exceedNum)
+		this._exceedNum<=this._attackNum && (this.exceedLabel.string = '已超过' + Math.floor(this._exceedNum) + '名超人')
 	},
 
 	createHarmNum (harm) {
@@ -129,12 +159,6 @@ cc.Class({
 		kcoin.setPosition(cc.v2(position))
 		// const	kcoinAnim = kcoin.getComponent(cc.Animation)
 		// kcoinAnim && (kcoinAnim.play('gold'))
-		console.log('createKcoin kcoin', kcoin)
-		// let collider = kcoin.addComponent(cc.PhysicsCircleCollider);
-		// collider.density = 1;
-		// collider.restitution = 0.4;
-		// collider.friction = 0.5;
-		// collider.radius = r;
 		this._kcoinArray.push(kcoin)
 		const x = Math.round(Math.random()* this._randomRange)* (Math.random()>0.5? 1:-1)
 		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
@@ -154,6 +178,16 @@ cc.Class({
 	getHP () {
 		const progressBar = this.progressBar.getComponent('cc.ProgressBar')
 		return progressBar.progress
+	},
+
+	getThreshold (prop) {
+		let threshold = 0
+		if (prop < 0.1) threshold = 0.5
+		else if (prop < 0.3) threshold = 0.2
+		else if (prop < 0.6) threshold = 0.1
+		else if (prop < 0.9) threshold = 0.05
+		else threshold = 0.01
+		return threshold
 	},
 
 	setHP (val) {
