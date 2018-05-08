@@ -29,6 +29,7 @@ cc.Class({
 		_attackNum: 0,
 		_exceedNum: 0,
 		_exceedMap: null,
+		_harmCompleted: null,
 	},
 
 	onLoad () {
@@ -36,14 +37,16 @@ cc.Class({
 		// 初始化超过人数表
 		this.initExcees()
 		this.setExceedLabel()
-		//初始化对象池
+		// 初始化对象池
 		this.initPool()
 		this._attack = this.getAttack()
 		this._HP = this.getHP()
 		this._kcoinArray = []
 		this._exceedNum = 0
-		//金币x坐标随机范围
+		// 金币x坐标随机范围
 		this._randomRange = 100
+		// 是否受伤动画中
+		this._harmCompleted = false
 	},
 
 	onEnable () {
@@ -58,7 +61,8 @@ cc.Class({
 		if (self.tag === 1) {
 			const hitPosition = other.node.getPosition()
 			//敌人受伤状态
-			this.enemy.getComponent('game-enemy-script').animate(2)
+			!this._harmCompleted && (this.enemy.getComponent('game-enemy-script').animate(2),
+				this._harmCompleted = true)
 			//显示伤害值
 			this.createHarmNum(this.harmNum)
 			//血条减少
@@ -78,6 +82,7 @@ cc.Class({
 	onHarmedAniCompleted () {
 		console.log('onHarmedAniCompleted')
 		this.enemy.getComponent('game-enemy-script').animate(1)
+		this._harmCompleted = false
 	},
 
 	initExcees () {
@@ -117,7 +122,7 @@ cc.Class({
 				percent = item[0]
 			}
 		}
-		num = this._attackNum>1? (this._attackNum>=100? Math.floor(this._attackNum* percent):this._attackNum* percent): (percent>.06? 1:0)
+		num = this._attackNum>1? (this._attackNum>=100? Math.ceil(this._attackNum* percent):this._attackNum* percent): (percent>.06? 1:0)
 		this._exceedNum += num* threshold
 		console.log('this._attackNum', this._attackNum)
 		console.log('this._exceedNum', this._exceedNum)
@@ -182,7 +187,7 @@ cc.Class({
 
 	getThreshold (prop) {
 		let threshold = 0
-		if (prop < 0.1) threshold = 0.5
+		if (prop < 0.1) threshold = 0.4
 		else if (prop < 0.3) threshold = 0.2
 		else if (prop < 0.6) threshold = 0.1
 		else if (prop < 0.9) threshold = 0.05

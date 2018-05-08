@@ -3,7 +3,7 @@
   "_name": "harmed",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.13333333333333333,
+  "_duration": 0.11666666666666667,
   "sample": 60,
   "speed": 0.3,
   "wrapMode": 1,
@@ -14,49 +14,43 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "d6d0bef0-c359-48ee-9552-bf755f976905"
+              "__uuid__": "856827bc-bc86-4cbc-89de-d949be5ff0d7"
             }
           },
           {
             "frame": 0.016666666666666666,
             "value": {
-              "__uuid__": "d7215d3a-0c12-4336-85f4-7c4825bd5edd"
+              "__uuid__": "4dfaf009-595f-4857-a06d-a5a4e2b53714"
             }
           },
           {
             "frame": 0.03333333333333333,
             "value": {
-              "__uuid__": "25016aba-a8ca-4812-8c86-eadf913f1622"
+              "__uuid__": "30131c90-17c7-4263-a006-a0ee8a5a8371"
             }
           },
           {
             "frame": 0.05,
             "value": {
-              "__uuid__": "fe35369c-ac76-40fc-85d5-e2fc116416b0"
+              "__uuid__": "328ac408-73a6-4ca6-b153-216cf2a0b89d"
             }
           },
           {
             "frame": 0.06666666666666667,
             "value": {
-              "__uuid__": "19130251-d96f-46c6-9ed5-44fd5707dd33"
+              "__uuid__": "8f41fb1b-1118-41e6-9450-dd8123ed2bdc"
             }
           },
           {
             "frame": 0.08333333333333333,
             "value": {
-              "__uuid__": "44f4d60b-da3a-4f24-bf2c-7a2d1f03979d"
+              "__uuid__": "e0c80b07-509d-4dee-92b2-a3caa3738fc9"
             }
           },
           {
             "frame": 0.1,
             "value": {
-              "__uuid__": "2e56f593-80ce-4cc1-a037-c8016cf4efd1"
-            }
-          },
-          {
-            "frame": 0.11666666666666667,
-            "value": {
-              "__uuid__": "0d4a77b5-2ab3-4342-9471-a0eff3e2c9d0"
+              "__uuid__": "22bc986e-f020-4248-8025-4ba9aaba4571"
             }
           }
         ]
@@ -65,7 +59,7 @@
   },
   "events": [
     {
-      "frame": 0.11666666666666667,
+      "frame": 0.1,
       "func": "onHarmedAniCompleted",
       "params": []
     }

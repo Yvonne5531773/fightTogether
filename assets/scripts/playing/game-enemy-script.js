@@ -17,13 +17,13 @@ cc.Class({
 		let ani = ''
 		switch (type) {
 			case 1:
-				ani = 'run';
+				ani = 'breath';
 				break;
 			case 2:
 				ani = 'harmed';
 				break;
 			default:
-				ani = 'run';
+				ani = 'breath';
 				break;
 		}
 		console.log('enemy animate ani', ani)
@@ -49,7 +49,7 @@ cc.Class({
 	},
 
 	stopAnimate () {
-		this._enemyPlay && this._enemyPlay.stop('run')
+		this._enemyPlay && this._enemyPlay.stop('breath')
 	},
 
 	// update (dt) {},
