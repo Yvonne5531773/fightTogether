@@ -13,8 +13,8 @@ cc.Class({
 		tabSwitchDuration: 0,
 	},
 
-	init (mainMenu) {
-		this.mainMenu = mainMenu
+	init (main) {
+		this.main = main
 		this.tabSwitchDuration = 0
 		this.curTabIdx = 0
 		this.tabs = this.container.children
@@ -25,7 +25,7 @@ cc.Class({
 		// 	this.container.addChild(tab.node);
 		// 	tab.init({
 		// 		sidebar: this,
-		// 		idx: i,
+		// 		index: i,
 		// 		iconSF:iconSF
 		// 	});
 		// 	this.tabs[i] = tab;
@@ -34,19 +34,20 @@ cc.Class({
 		this.changeHighlight(this.curTabIdx)
 	},
 
-	tabPressed (idx) {
+	tabPressed (index) {
 		// for (let i = 0; i < this.tabs.length; ++i) {
 		// 	let tab = this.tabs[i];
-		// 	if (tab.idx === idx) {
+		// 	if (tab.index === index) {
 		// 		tab.turnBig();
 		// 		cc.eventManager.pauseTarget(tab.node);
-		// 	} else if (this.curTabIdx === tab.idx) {
+		// 	} else if (this.curTabIdx === tab.index) {
 		// 		tab.turnSmall();
 		// 		cc.eventManager.resumeTarget(tab.node);
 		// 	}
 		// }
-		this.changeHighlight(idx)
-		// this.mainMenu.switchPanel(this.curTabIdx);
+		this.changeHighlight(index)
+		console.log('tabPressed index', index)
+		this.main.switchPanel(index)
 	},
 
 	changeHighlight (index) {

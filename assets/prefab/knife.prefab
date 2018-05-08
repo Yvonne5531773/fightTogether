@@ -109,7 +109,10 @@
     "_ms": null,
     "_mainNodeVec": null,
     "_prePosition": null,
-    "_audioPlayed": null
+    "_audioPlayed": null,
+    "_now": null,
+    "_isMoving": null,
+    "_scratchSpeed": null
   },
   {
     "__type__": "cc.MotionStreak",

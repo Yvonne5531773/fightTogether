@@ -1,4 +1,4 @@
-const MenuSidebar = require('menu-sidebar-script')
+const MenuSidebar = require('sidebar-script')
 
 cc.Class({
 	extends: cc.Component,
@@ -8,7 +8,6 @@ cc.Class({
 	},
 
 	onPressed (e, customEventData) {
-		console.log('onPressed customEventData', customEventData)
 		console.log('onPressed this.sidebar', this.sidebar)
 		this.sidebar.tabPressed(customEventData);
 	},

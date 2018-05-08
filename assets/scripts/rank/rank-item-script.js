@@ -13,13 +13,13 @@ cc.Class({
 		itemID: 0
 	},
 
-	onLoad: function () {
+	onLoad () {
 		// this.node.on('touched', function() {
 		// 	console.log('Item ' + this.itemID + ' clicked');
 		// }, this);
 	},
 
-	updateItem: function(data, itemId) {
+	updateItem (data, itemId) {
 		this.itemID = itemId
 		console.log('updateItem data', data)
 		this.label.string = 'name:' + data.name

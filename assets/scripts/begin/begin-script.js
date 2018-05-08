@@ -24,7 +24,7 @@ cc.Class({
 		const criteria = {
 			path: config.infoPath,
 			data: {
-				"token": "CpOvzPnX8NkOfvqICnbdJoGgmRERvowa",
+				"token": "OJQgKzjBPHEe5BaYQkLOogpm28J13Xbg",
 				"ts": Date.parse(new Date()),
 				"uuid": "test"
 			},
