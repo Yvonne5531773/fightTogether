@@ -58,8 +58,6 @@ cc.Class({
 			if (!this._enemyComponent) return
 			!this._harmCompleted && (this._enemyComponent.animate(2),
 				this._harmCompleted = true)
-			// 显示伤害值
-			this.createHarmNum(this.harmNum)
 			// 造成伤害
 			let isBoom = false
 			if (Math.floor(Math.random()*100) <= this._totalBoom*100) {
@@ -67,10 +65,13 @@ cc.Class({
 			}
 			console.log('isBoom', isBoom)
 			// 暴击后伤害加倍
-			const attack = isBoom? this._attack* 2 : this._attack
+			let attack = isBoom? this._attack* 2 : this._attack
 			console.log('attack', attack)
 			this._harm += attack
 			this.setHarmLabel(this._harm)
+			// 显示伤害值
+			attack = 112233
+			this.createHarmNum(this.harmNum, attack)
 			//血条减少
 			this._HP -= attack
 			this.setHPBar(this._HP)
@@ -140,15 +141,17 @@ cc.Class({
 		this._exceedNum<=this._attackNum && (this.exceedLabel.string = '已超过' + Math.floor(this._exceedNum) + '名超人')
 	},
 
-	createHarmNum (harm) {
-		if(!harm) return
+	createHarmNum (harmPrefab, attack) {
+		if(!harmPrefab) return
 		let harmNum = null
 		if (this._harmNumPool && this._harmNumPool.size() > 0) {
 			harmNum = this._harmNumPool.get()
 		} else {
-			harmNum = cc.instantiate(harm)
+			harmNum = cc.instantiate(harmPrefab)
 		}
 		this.enemy.addChild(harmNum)
+		// 根据伤害构造字体图片
+		this.constructNum(harmNum, attack)
 		harmNum.setPosition(cc.v2(this.enemy.getPosition()))
 		harmNum.setScale(.5, .5)
 		const fadeIn = cc.fadeIn(.6).easing(cc.easeCubicActionIn()),
@@ -159,6 +162,20 @@ cc.Class({
 		harmNum.runAction(cc.sequence(...sequences, cc.callFunc(function() {
 			this.destoryHarmNum(harmNum)
 		}, this)))
+	},
+
+	constructNum (harmNum, attack = 0) {
+		if (!harmNum) return
+		console.log('createHarmNum harmNum', harmNum)
+		let ackArr = (attack+'').split(''),
+			nums = harmNum.children.map(child => child.getComponent(cc.Sprite).spriteFrame)
+		harmNum.children.forEach((child, i) => {
+			if (i < ackArr.length) {
+				console.log('parseInt(ackArr[i])', parseInt(ackArr[i]))
+				child.getComponent(cc.Sprite).spriteFrame = nums[parseInt(ackArr[i])]
+				child.active = true
+			}
+		})
 	},
 
 	destoryHarmNum (harmNum) {
@@ -197,7 +214,7 @@ cc.Class({
 	},
 
 	setHPBar (hp) {
-		if (hp > this._HPMax) return
+		if (hp <0 || hp > this._HPMax) return
 		this._hpComponent.progress = hp / this._HPMax
 		console.log('this._hpComponent', this._hpComponent)
 		const hpVal = this.enemy.getChildByName('HP-val')
