@@ -7,11 +7,12 @@ cc.Class({
 	extends: cc.Component,
 
 	properties: {
-		_vm: {}
+		_vm: {},
 	},
 
 	async onLoad () {
-		const res = await this.getInfo()
+		this.token = "OJQgKzjBPHEe5BaYQkLOogpm28J13Xbg"
+		const res = await this.getInfo(this.token)
 		if(!res) return
 		this._vm = cc.clone(res.data)
 		// 存储数据
@@ -20,11 +21,11 @@ cc.Class({
 		this.toScene()
   },
 
-	async getInfo () {
+	async getInfo (token) {
 		const criteria = {
 			path: config.infoPath,
 			data: {
-				"token": "OJQgKzjBPHEe5BaYQkLOogpm28J13Xbg",
+				"token": token,
 				"ts": Date.parse(new Date()),
 				"uuid": "test"
 			},
@@ -49,6 +50,7 @@ cc.Class({
 	storeData () {
 		const node = cc.find('data-store').getComponent('datastore-script')
 		node.setdata(this._vm)
+		node.setToken(this.token)
 	}
 
 });

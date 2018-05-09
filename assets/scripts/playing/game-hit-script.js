@@ -3,47 +3,42 @@ cc.Class({
 
 	properties: {
 		enemy: cc.Node,
-		harmNum: {
-			default: null,
-			type: cc.Prefab
-		},
-		kcoin: {
-			default: null,
-			type: cc.Prefab
-		},
-		knifeCtr: {
-			type: cc.Node,
-			default: null
-		},
+		knifeCtr: cc.Node,
+		hpBar: cc.Node,
+		harmNum: cc.Prefab,
+		kcoin: cc.Prefab,
 		harmLabel: cc.Label,
 		exceedLabel: cc.Label,
-		progressBar: cc.Node,
 		_attack: 0,
-		_HP: 0,
 		_harm: 0,
 		_harmNumPool: null,
 		_kcoinPool: null,
 		_kcoinArray: null,
 		_initPoolCount: 10,
-		_randomRange: 0,
 		_attackNum: 0,
-		_exceedNum: 0,
 		_exceedMap: null,
 		_harmCompleted: null,
+		_totalBoom: null,
 	},
 
 	onLoad () {
-		this.setHarmLabel(this._harmScore)
+		this._enemyComponent = this.enemy.getComponent('game-enemy-script')
+		this._hpComponent = this.hpBar.getComponent('cc.ProgressBar')
+		const ds = cc.director.getScene().getChildByName('data-store')
+		this.dataStore = ds? ds.getComponent('datastore-script'):null
 		// 初始化超过人数表
 		this.initExcees()
 		this.setExceedLabel()
 		// 初始化对象池
 		this.initPool()
+		// 初始化暴击率
+		this.initTotalBoom()
+		// 初始化血条
+		this.initHPBar()
 		this._attack = this.getAttack()
-		this._HP = this.getHP()
 		this._kcoinArray = []
 		this._exceedNum = 0
-		// 金币x坐标随机范围
+		// 金币x坐标随机范围 (0, 100)
 		this._randomRange = 100
 		// 是否受伤动画中
 		this._harmCompleted = false
@@ -59,29 +54,37 @@ cc.Class({
 
 	onCollisionEnter (other, self) {
 		if (self.tag === 1) {
-			const hitPosition = other.node.getPosition()
 			//敌人受伤状态
-			!this._harmCompleted && (this.enemy.getComponent('game-enemy-script').animate(2),
+			if (!this._enemyComponent) return
+			!this._harmCompleted && (this._enemyComponent.animate(2),
 				this._harmCompleted = true)
-			//显示伤害值
+			// 显示伤害值
 			this.createHarmNum(this.harmNum)
-			//血条减少
-			this._HP -= this._attack* .001
-			this.setHP(this._HP)
-			//造成伤害
-			this._harm += this._attack
+			// 造成伤害
+			let isBoom = false
+			if (Math.floor(Math.random()*100) <= this._totalBoom*100) {
+				isBoom = true
+			}
+			console.log('isBoom', isBoom)
+			// 暴击后伤害加倍
+			const attack = isBoom? this._attack* 2 : this._attack
+			console.log('attack', attack)
+			this._harm += attack
 			this.setHarmLabel(this._harm)
+			//血条减少
+			this._HP -= attack
+			this.setHPBar(this._HP)
 			//显示超越数值
 			this.setExceedLabel()
 			//氪币掉落
+			const hitPosition = other.node.getPosition()
 			this.createKcoin(hitPosition)
 		}
 	},
 
 	//受伤动画结束
 	onHarmedAniCompleted () {
-		console.log('onHarmedAniCompleted')
-		this.enemy.getComponent('game-enemy-script').animate(1)
+		this._enemyComponent.animate(1)
 		this._harmCompleted = false
 	},
 
@@ -102,9 +105,19 @@ cc.Class({
 		}
 	},
 
+	initTotalBoom () {
+		if (!this.dataStore) return
+		const gainBoom = this.dataStore.getGainBoom() || 0,
+			boom = this._enemyComponent.getBoom() || 0
+		this._totalBoom = gainBoom + boom
+		console.log('getAttack gainBoom', gainBoom)
+		console.log('getAttack boom', boom)
+		console.log('getAttack this._totalBoom', this._totalBoom)
+	},
+
 	setHarmLabel (num) {
 		if(!num) return
-		this.harmLabel.string = '造成伤害' + Math.floor(num)
+		this.harmLabel.string = '造成伤害' + Math.floor(num/10000)
 	},
 
 	setExceedLabel () {
@@ -124,8 +137,6 @@ cc.Class({
 		}
 		num = this._attackNum>1? (this._attackNum>=100? Math.ceil(this._attackNum* percent):this._attackNum* percent): (percent>.06? 1:0)
 		this._exceedNum += num* threshold
-		console.log('this._attackNum', this._attackNum)
-		console.log('this._exceedNum', this._exceedNum)
 		this._exceedNum<=this._attackNum && (this.exceedLabel.string = '已超过' + Math.floor(this._exceedNum) + '名超人')
 	},
 
@@ -148,7 +159,6 @@ cc.Class({
 		harmNum.runAction(cc.sequence(...sequences, cc.callFunc(function() {
 			this.destoryHarmNum(harmNum)
 		}, this)))
-		console.log('in createHarmNum this._harmNumPool', this._harmNumPool)
 	},
 
 	destoryHarmNum (harmNum) {
@@ -176,13 +186,22 @@ cc.Class({
 	},
 
 	getAttack () {
-		const attack = 1
-		return attack
+		if (!this._enemyComponent) return
+		return this._enemyComponent.getPlayerAck()
 	},
 
-	getHP () {
-		const progressBar = this.progressBar.getComponent('cc.ProgressBar')
-		return progressBar.progress
+	initHPBar () {
+		this._HP = this._enemyComponent.getHP() || 1
+		this._HPMax = this._enemyComponent.getHPMax() || 1
+		this.setHPBar(this._HP)
+	},
+
+	setHPBar (hp) {
+		if (hp > this._HPMax) return
+		this._hpComponent.progress = hp / this._HPMax
+		console.log('this._hpComponent', this._hpComponent)
+		const hpVal = this.enemy.getChildByName('HP-val')
+		hpVal.getComponent('cc.Label').string = Math.floor(hp/10000)+'HP/' + Math.floor(this._HPMax/10000)+'HP'
 	},
 
 	getThreshold (prop) {
@@ -195,11 +214,7 @@ cc.Class({
 		return threshold
 	},
 
-	setHP (val) {
-		const progressBar = this.progressBar.getComponent('cc.ProgressBar')
-		progressBar.progress = val
-	},
-
+	// 掉落金币抛物线
 	emitTo (body, target) {
 		let x = target.x,
 			y = target.y,
@@ -209,18 +224,16 @@ cc.Class({
 			velocity = cc.v2(x-selfX, y-selfY)
 		velocity.normalizeSelf()
 		velocity.mulSelf(distance* 2)
-		console.log('emitTo velocity', velocity)
-		console.log('emitTo distance', distance)
 		body.linearVelocity = velocity
 	},
 
-	update (dt) {
-		//检测金币是否离开可视范围
-		this._kcoinArray.forEach((kcoin) => {
-			if(kcoin.getPosition().y < 0) {
-				this.destoryKcoin(kcoin)
-			}
-		})
-	}
+	// update (dt) {
+	// 	//检测金币是否离开可视范围
+	// 	this._kcoinArray.forEach((kcoin) => {
+	// 		if(kcoin.getPosition().y < 0) {
+	// 			this.destoryKcoin(kcoin)
+	// 		}
+	// 	})
+	// }
 
 });

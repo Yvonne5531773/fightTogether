@@ -21,14 +21,14 @@ cc.Class({
 		// 获取数据
 		this._vm = this.getData()
 		// 敌人信息
-		this._vm && this.setEnemy(this._vm.enemy)
+		this._vm && this.setEnemy(this._vm)
 		// 初始化武器
 		this.initKnife(this.knifePrefab)
 		// 初始化倒计时
 		this.initCountDown(this._timeScore = 200)
 		// 开启物理系统
 		cc.director.getPhysicsManager().enabled = true
-		//加载音乐文件
+		// 加载音乐文件
 		// const node = cc.director.getScene().getChildByName('data-store'),
 		// 	data = node? node.getComponent('datastore-script').getdata():{},
 		// const configUrl = 'config.json'
@@ -74,12 +74,15 @@ cc.Class({
 			nameStr = name? name.getComponent('cc.Label') : null,
 			hpBarVal = bar? bar.getComponent('cc.ProgressBar') : null,
 			hpVal = hp? hp.getComponent('cc.Label') : null
-		nameStr && (nameStr.string = data.name)
-		hpBarVal && (hpBarVal.progress = data.hp/data.hp_max)
-		hpVal && (data.hp_max>=data.hp) && (hpVal.string = Math.floor(data.hp/10000)+'HP/' + Math.floor(data.hp_max/10000)+'HP')
-		console.log('setEnemy this.enemy', this.enemy)
-		console.log('setEnemy data', data)
-		this.enemy.getComponent('game-enemy-script').setAttackNum(data.attack_user_num)
+		nameStr && (nameStr.string = data.enemy.name)
+		hpBarVal && (hpBarVal.progress = data.enemy.hp/data.enemy.hp_max)
+		hpVal && (data.enemy.hp_max>=data.enemy.hp) && (hpVal.string = Math.floor(data.enemy.hp/10000)+'HP/' + Math.floor(data.enemy.hp_max/10000)+'HP')
+		const enemy = this.enemy.getComponent('game-enemy-script')
+		enemy.setAttackNum(data.enemy.attack_user_num)
+		enemy.setPlayerAck(data.user_attrs.ack)
+		enemy.setHP(data.enemy.hp)
+		enemy.setHPMax(data.enemy.hp_max)
+		enemy.setBoom(data.user_attrs.boom / 10000)
 	},
 
 	endGame () {

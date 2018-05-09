@@ -2,9 +2,11 @@ cc.Class({
 	extends: cc.Component,
 
 	properties: {
-		_enemyPlay: null,
+		_HPVal: 0,
+		_HPMaxVal: 0,
+		_playerAck: 0,
 		_attackNum: 0,
-		HPVal: 0
+		_boom: 0,
 	},
 
 	onLoad () {
@@ -26,20 +28,47 @@ cc.Class({
 				ani = 'breath';
 				break;
 		}
-		console.log('enemy animate ani', ani)
 		this._enemyPlay && this._enemyPlay.play(ani)
 	},
 
+	stopAnimate () {
+		this._enemyPlay && this._enemyPlay.stop('breath')
+	},
+
 	getHP () {
-		return this.HPVal
+		return this._HPVal
+	},
+
+	setHP (val) {
+		this._HPVal = val
+	},
+
+	getHPMax () {
+		return this._HPMaxVal
+	},
+
+	setHPMax (val) {
+		this._HPMaxVal = val
+	},
+
+	getPlayerAck () {
+		return this._playerAck
+	},
+
+	setPlayerAck (val) {
+		this._playerAck = val
+	},
+
+	getBoom () {
+		return this._boom
+	},
+
+	setBoom (val) {
+		this._boom = val
 	},
 
 	getAttackNum () {
 		return this._attackNum
-	},
-
-	setHP (val) {
-		this.HPVal = val
 	},
 
 	setAttackNum (num) {
@@ -48,9 +77,4 @@ cc.Class({
 		console.log('setAttackNum num', num)
 	},
 
-	stopAnimate () {
-		this._enemyPlay && this._enemyPlay.stop('breath')
-	},
-
-	// update (dt) {},
 });
