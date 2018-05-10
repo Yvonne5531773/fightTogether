@@ -55,7 +55,7 @@ cc.Class({
 			// 是否暴击
 			const isBoom = this.getBoom()
 			// 暴击后伤害加倍
-			const attack = this.getAttack(isBoom)
+			const attack = this.getTotalAttack(isBoom)
 			console.log('onCollisionEnter attack', attack)
 			this.setHarmLabel(attack)
 			// 显示伤害值
@@ -231,11 +231,10 @@ cc.Class({
 		return type
 	},
 
-	getAttack (isBoom) {
+	getTotalAttack (isBoom) {
 		// 暴击后伤害加倍
 		const tmpAck = util.randomNumBoth(this._attack, this._attack*2)
-		let attack = isBoom? tmpAck* 2 : tmpAck,
-			harmPrefab = isBoom? this.harmNumBoom : this.harmNum
+		return isBoom? tmpAck* 2 : tmpAck
 	},
 
 	getBoom () {
