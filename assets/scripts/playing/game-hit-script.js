@@ -46,39 +46,27 @@ cc.Class({
 	},
 
 	onCollisionEnter (other, self) {
-		let ani = 0
-		switch (self.tag) {
-			case 1: ani = 2;break;
-			case 2: ani = 3;break;
-			case 4: ani = 4;break;
-		}
-		if (ani !== 0) {
-			//敌人受伤状态
-			if (!this._enemyComponent) return
-			!this._harmCompleted && (this._enemyComponent.animate(ani),
+		const type = this.getAnimateType(self.tag)
+		if (type !== 0 && this._enemyComponent) {
+			// 敌人受伤状态
+			!this._harmCompleted && (
+				this._enemyComponent.animate(type),
 				this._harmCompleted = true)
-			// 造成伤害
-			// let isBoom = true
-			let isBoom = false
-			Math.floor(Math.random()*100) <= this._totalBoom*100 && (isBoom = true)
+			// 是否暴击
+			const isBoom = this.getBoom()
 			// 暴击后伤害加倍
-			const tmpAck = util.randomNumBoth(this._attack, this._attack*2)
-			let attack = isBoom? tmpAck* 2 : tmpAck,
-				harmPrefab = isBoom? this.harmNumBoom : this.harmNum
-			console.log('attack', attack)
-			this._harm += attack
-			this.setHarmLabel(this._harm)
+			const attack = this.getAttack(isBoom)
+			console.log('onCollisionEnter attack', attack)
+			this.setHarmLabel(attack)
 			// 显示伤害值
 			// attack = 50
-			this.createHarmNum(harmPrefab, Math.floor(attack/10000))
+			this.createHarmNum(isBoom, Math.floor(attack/10000))
 			//血条减少
-			this._HP -= attack
-			this.setHPBar(this._HP)
+			this.setHPBar(attack)
 			//显示超越数值
 			this.setExceedLabel()
 			//氪币掉落
-			const hitPosition = other.node.getPosition()
-			this.createKcoin(hitPosition)
+			this.createKcoin(other)
 		}
 	},
 
@@ -124,34 +112,15 @@ cc.Class({
 		console.log('getAttack this._totalBoom', this._totalBoom)
 	},
 
-	setHarmLabel (num) {
-		if(!num) return
-		this.harmLabel.string = '造成伤害' + Math.floor(num/10000)
+	initHPBar () {
+		this._HP = this._enemyComponent.getHP() || 1
+		this._HPMax = this._enemyComponent.getHPMax() || 1
+		this.setHPBar(this._HP)
 	},
 
-	setExceedLabel () {
-		console.log('setExceedLabel this._attackNum', this._attackNum)
-		if (this._attackNum <= 0) {
-			this.exceedLabel.string = '是本次首战超人!'
-			return
-		}
-		const knife = this.knifeCtr.getChildByName('knife').getComponent('game-knife-script'),
-			ss = knife? knife.getScratchSpeed() : 0
-		let num = 0,
-			percent = 0,
-			threshold = this.getThreshold(this._exceedNum/this._attackNum)
-		for (let item of this._exceedMap.entries()) {
-			if (ss >= item[1]) {
-				percent = item[0]
-			}
-		}
-		num = this._attackNum>1? (this._attackNum>=100? Math.ceil(this._attackNum* percent):this._attackNum* percent): (percent>.06? 1:0)
-		this._exceedNum += num* threshold
-		this._exceedNum<=this._attackNum && (this.exceedLabel.string = '已超过' + Math.floor(this._exceedNum) + '名超人')
-	},
-
-	createHarmNum (harmPrefab, attack) {
-		if(!harmPrefab) return
+	createHarmNum (isBoom, attack) {
+		const harmPrefab = isBoom? this.harmNumBoom : this.harmNum
+		console.log('createHarmNum attack', attack)
 		let pool =  harmPrefab._name==='harm-number'?this._harmNumPool : this._harmNumBoomPool,
 			harmNum = pool&&pool.size()>0? pool.get() : cc.instantiate(harmPrefab)
 		// 设置暴击字体层级最高
@@ -177,6 +146,19 @@ cc.Class({
 		// harmNum.runAction(fadeOut)
 	},
 
+	createKcoin (other) {
+		const position = other.node.getPosition()
+		if(!position) return
+		let kcoin = this._kcoinPool && this._kcoinPool.size() > 0? this._kcoinPool.get() : cc.instantiate(this.kcoin)
+		this.knifeCtr.addChild(kcoin)
+		kcoin.setPosition(cc.v2(position))
+		// const	kcoinAnim = kcoin.getComponent(cc.Animation)
+		// kcoinAnim && (kcoinAnim.play('gold'))
+		// this._kcoinArray.push(kcoin)
+		const x = Math.round(Math.random()* this._randomRange)* (Math.random()>0.5? 1:-1)
+		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
+	},
+
 	constructNum (harmNum, attack = 0) {
 		if (!harmNum) return
 		let ackArr = (attack+'').split(''),
@@ -189,40 +171,44 @@ cc.Class({
 		})
 	},
 
-	createKcoin (position) {
-		if(!position) return
-		let kcoin = this._kcoinPool && this._kcoinPool.size() > 0? this._kcoinPool.get() : cc.instantiate(this.kcoin)
-		this.knifeCtr.addChild(kcoin)
-		kcoin.setPosition(cc.v2(position))
-		// const	kcoinAnim = kcoin.getComponent(cc.Animation)
-		// kcoinAnim && (kcoinAnim.play('gold'))
-		// this._kcoinArray.push(kcoin)
-		const x = Math.round(Math.random()* this._randomRange)* (Math.random()>0.5? 1:-1)
-		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
+	setHarmLabel (attack) {
+		this._harm += attack
+		this.harmLabel.string = '造成伤害' + Math.floor(this._harm/10000)
 	},
 
-	destoryKcoin (kcoin) {
-		if(!kcoin) return
-		this._kcoinPool.put(cc.instantiate(this.kcoin))
-		kcoin.destroy()
+	setExceedLabel () {
+		console.log('setExceedLabel this._attackNum', this._attackNum)
+		if (this._attackNum <= 0) {
+			this.exceedLabel.string = '是本次首战超人!'
+			return
+		}
+		const knife = this.knifeCtr.getChildByName('knife').getComponent('game-knife-script'),
+			ss = knife? knife.getScratchSpeed() : 0
+		let num = 0,
+			percent = 0,
+			threshold = this.getThreshold(this._exceedNum/this._attackNum)
+		for (let item of this._exceedMap.entries()) {
+			if (ss >= item[1]) {
+				percent = item[0]
+			}
+		}
+		num = this._attackNum>1? (this._attackNum>=100? Math.ceil(this._attackNum* percent):this._attackNum* percent): (percent>.06? 1:0)
+		this._exceedNum += num* threshold
+		this._exceedNum<=this._attackNum && (this.exceedLabel.string = '已超过' + Math.floor(this._exceedNum) + '名超人')
+	},
+
+	setHPBar (attack) {
+		this._HP -= attack
+		let hp = this._HP
+		if (hp <0 || hp > this._HPMax) return
+		this._hpComponent.progress = hp / this._HPMax
+		const hpVal = this.enemy.getChildByName('HP-val')
+		hpVal.getComponent('cc.Label').string = Math.floor(hp/10000)+'HP/' + Math.floor(this._HPMax/10000)+'HP'
 	},
 
 	getAttack () {
 		if (!this._enemyComponent) return
 		return this._enemyComponent.getPlayerAck()
-	},
-
-	initHPBar () {
-		this._HP = this._enemyComponent.getHP() || 1
-		this._HPMax = this._enemyComponent.getHPMax() || 1
-		this.setHPBar(this._HP)
-	},
-
-	setHPBar (hp) {
-		if (hp <0 || hp > this._HPMax) return
-		this._hpComponent.progress = hp / this._HPMax
-		const hpVal = this.enemy.getChildByName('HP-val')
-		hpVal.getComponent('cc.Label').string = Math.floor(hp/10000)+'HP/' + Math.floor(this._HPMax/10000)+'HP'
 	},
 
 	getThreshold (prop) {
@@ -233,6 +219,27 @@ cc.Class({
 		else if (prop < 0.9) threshold = 0.05
 		else threshold = 0.01
 		return threshold
+	},
+
+	getAnimateType (tag) {
+		let type = 0
+		switch (tag) {
+			case 1: type = 2;break;
+			case 2: type = 3;break;
+			case 4: type = 4;break;
+		}
+		return type
+	},
+
+	getAttack (isBoom) {
+		// 暴击后伤害加倍
+		const tmpAck = util.randomNumBoth(this._attack, this._attack*2)
+		let attack = isBoom? tmpAck* 2 : tmpAck,
+			harmPrefab = isBoom? this.harmNumBoom : this.harmNum
+	},
+
+	getBoom () {
+		return Math.floor(Math.random()*100) <= this._totalBoom*100
 	},
 
 	// 掉落金币抛物线
@@ -246,6 +253,12 @@ cc.Class({
 		velocity.normalizeSelf()
 		velocity.mulSelf(distance* 2)
 		body.linearVelocity = velocity
+	},
+
+	destoryKcoin (kcoin) {
+		if(!kcoin) return
+		this._kcoinPool.put(cc.instantiate(this.kcoin))
+		kcoin.destroy()
 	},
 
 	// update (dt) {
