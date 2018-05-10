@@ -4,108 +4,108 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>怪物呼吸_00.png</key>
+            <key>打肩膀_00000.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-48}</string>
+                <string>{0,-6}</string>
                 <key>spriteSize</key>
-                <string>{1084,968}</string>
+                <string>{1102,966}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{1084,968}}</string>
+                <string>{{958,1102},{1102,966}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>怪物呼吸_01.png</key>
+            <key>打肩膀_00001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-49}</string>
+                <string>{-1,-5}</string>
                 <key>spriteSize</key>
-                <string>{1086,966}</string>
+                <string>{1130,968}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{1084,0},{1086,966}}</string>
+                <string>{{0,2142},{1130,968}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>怪物呼吸_02.png</key>
+            <key>打肩膀_00002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-51}</string>
+                <string>{39,31}</string>
                 <key>spriteSize</key>
-                <string>{1096,962}</string>
+                <string>{958,1040}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{2170,0},{1096,962}}</string>
+                <string>{{0,1102},{958,1040}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>怪物呼吸_03.png</key>
+            <key>打肩膀_00003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-52}</string>
+                <string>{-6,61}</string>
                 <key>spriteSize</key>
-                <string>{1106,960}</string>
+                <string>{926,1100}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{0,968},{1106,960}}</string>
+                <string>{{924,0},{926,1100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>怪物呼吸_04.png</key>
+            <key>打肩膀_00004.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-52}</string>
+                <string>{-9,62}</string>
                 <key>spriteSize</key>
-                <string>{1112,960}</string>
+                <string>{924,1102}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{1106,968},{1112,960}}</string>
+                <string>{{0,0},{924,1102}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>怪物呼吸_05.png</key>
+            <key>打肩膀_00005.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-51}</string>
+                <string>{31,43}</string>
                 <key>spriteSize</key>
-                <string>{1118,962}</string>
+                <string>{936,1064}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{0,1928},{1118,962}}</string>
+                <string>{{1850,0},{936,1064}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>怪物呼吸_06.png</key>
+            <key>打肩膀_00006.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-26,-50}</string>
+                <string>{0,-5}</string>
                 <key>spriteSize</key>
-                <string>{1112,964}</string>
+                <string>{1134,968}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{1118,1928},{1112,964}}</string>
+                <string>{{1130,2142},{1134,968}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -119,13 +119,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>breath.png</string>
+            <string>harm-hand.png</string>
             <key>size</key>
-            <string>{3266,2892}</string>
+            <string>{2786,3110}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:756d14ed917f01c5054285a0f7b2e606:fe661eba71553421bc329967a3ab5b68:57435c7fb3c8da8c280886efa5ecd85e$</string>
+            <string>$TexturePacker:SmartUpdate:f12a48f24698291225e3d3ddd3e2fe50:56a732ffa351df8dca7f67d33e8671aa:74d8b60bfa76ddc293a0a4349e8d74bb$</string>
             <key>textureFileName</key>
-            <string>breath.png</string>
+            <string>harm-hand.png</string>
         </dict>
     </dict>
 </plist>

@@ -1,27 +1,27 @@
-import "babel-polyfill"
+// require("babel-polyfill")
 const api = require('api'),
-	info = require('info'),
 	config = require('config')
 
 cc.Class({
 	extends: cc.Component,
 
 	properties: {
-		_vm: {},
+		_vm: null,
 	},
 
-	async onLoad () {
+	onLoad () {
 		this.token = "OJQgKzjBPHEe5BaYQkLOogpm28J13Xbg"
-		const res = await this.getInfo(this.token)
-		if(!res) return
-		this._vm = cc.clone(res.data)
-		// 存储数据
-		this.storeData()
-		// 导向场景
-		this.toScene()
+		this.getInfo(this.token).then(res => {
+			if(!res) return
+			this._vm = cc.clone(res.data)
+			// 存储数据
+			this.storeData()
+			// 导向场景
+			this.toScene()
+		})
   },
 
-	async getInfo (token) {
+	getInfo (token) {
 		const criteria = {
 			path: config.infoPath,
 			data: {
@@ -30,9 +30,9 @@ cc.Class({
 				"uuid": "test"
 			},
 			type: 'POST',
-			method: 'fetch'
+			method: 'http'
 		}
-		return await api.fetch(criteria)
+		return api.fetch(criteria)
 	},
 
 	toScene () {

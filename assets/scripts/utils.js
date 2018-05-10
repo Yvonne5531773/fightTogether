@@ -45,5 +45,12 @@ export default {
 		else {
 			return - (rota + 90 + atan)
 		}
+	},
+
+	// 根据随机范围获取随机数
+	randomNumBoth (Min, Max) {
+		let Range = Max - Min,
+			Rand = Math.random()
+		return Min + Math.round(Rand * Range)
 	}
 }

@@ -1,4 +1,4 @@
-import collision from '../utils/collision'
+import util from 'utils'
 
 cc.Class({
 	extends: cc.Component,
@@ -72,7 +72,6 @@ cc.Class({
 			speed = distance/diff
 		this.setScratchSpeed(speed)
 		this._isMoving = false
-		console.log('calScratchSpeed speed', speed)
 	},
 
 	checkCollision (now, pre) {
@@ -80,7 +79,7 @@ cc.Class({
 		// const enemyPos = cc.v2(this._mainScript.enemy.node.getPosition()).add(this._mainNodeVec),
 			enemyX = enemyPos.x,
 			enemyY = enemyPos.y
-		const col = collision.checkCollision(now.x, now.y, pre.x, pre.y, enemyX, enemyY, this.collOffest)
+		const col = util.checkCollision(now.x, now.y, pre.x, pre.y, enemyX, enemyY, this.collOffest)
 	},
 
 	audioPlay () {

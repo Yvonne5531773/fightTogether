@@ -1,4 +1,5 @@
-const tips = require('tip')
+const tips = require('tip'),
+	util = require('utils')
 
 cc.Class({
 	extends: cc.Component,
@@ -94,12 +95,12 @@ cc.Class({
 		if(!node) return
 		const dataStore = node.getComponent('datastore-script')
 		dataStore.setUseCoin(this.consumeCoinNum)
-		const randomNumBoth = (Min, Max) => {
-			let Range = Max - Min,
-				Rand = Math.random()
-			return Min + Math.round(Rand * Range)
-		}
-		const gainBoom = randomNumBoth(5, 50)
+		// const randomNumBoth = (Min, Max) => {
+		// 	let Range = Max - Min,
+		// 		Rand = Math.random()
+		// 	return Min + Math.round(Rand * Range)
+		// }
+		const gainBoom = util.randomNumBoth(5, 50)
 		// 提升暴击率
 		dataStore.setGainBoom(gainBoom / 100)
 		this._consumed = true

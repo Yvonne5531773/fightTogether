@@ -1,3 +1,5 @@
+const util = require('utils')
+
 cc.Class({
 	extends: cc.Component,
 
@@ -6,13 +8,12 @@ cc.Class({
 		knifeCtr: cc.Node,
 		hpBar: cc.Node,
 		harmNum: cc.Prefab,
+		harmNumBoom: cc.Prefab,
 		kcoin: cc.Prefab,
 		harmLabel: cc.Label,
 		exceedLabel: cc.Label,
 		_attack: 0,
 		_harm: 0,
-		_harmNumPool: null,
-		_kcoinPool: null,
 		_kcoinArray: null,
 		_initPoolCount: 10,
 		_attackNum: 0,
@@ -36,7 +37,7 @@ cc.Class({
 		// 初始化血条
 		this.initHPBar()
 		this._attack = this.getAttack()
-		this._kcoinArray = []
+		// this._kcoinArray = []
 		this._exceedNum = 0
 		// 金币x坐标随机范围 (0, 100)
 		this._randomRange = 100
@@ -44,34 +45,32 @@ cc.Class({
 		this._harmCompleted = false
 	},
 
-	onEnable () {
-		cc.director.getCollisionManager().enabled = true;
-	},
-
-	onDisable () {
-		cc.director.getCollisionManager().enabled = false;
-	},
-
 	onCollisionEnter (other, self) {
-		if (self.tag === 1) {
+		let ani = 0
+		switch (self.tag) {
+			case 1: ani = 2;break;
+			case 2: ani = 3;break;
+			case 4: ani = 4;break;
+		}
+		if (ani !== 0) {
 			//敌人受伤状态
 			if (!this._enemyComponent) return
-			!this._harmCompleted && (this._enemyComponent.animate(2),
+			!this._harmCompleted && (this._enemyComponent.animate(ani),
 				this._harmCompleted = true)
 			// 造成伤害
+			// let isBoom = true
 			let isBoom = false
-			if (Math.floor(Math.random()*100) <= this._totalBoom*100) {
-				isBoom = true
-			}
-			console.log('isBoom', isBoom)
+			Math.floor(Math.random()*100) <= this._totalBoom*100 && (isBoom = true)
 			// 暴击后伤害加倍
-			let attack = isBoom? this._attack* 2 : this._attack
+			const tmpAck = util.randomNumBoth(this._attack, this._attack*2)
+			let attack = isBoom? tmpAck* 2 : tmpAck,
+				harmPrefab = isBoom? this.harmNumBoom : this.harmNum
 			console.log('attack', attack)
 			this._harm += attack
 			this.setHarmLabel(this._harm)
 			// 显示伤害值
-			attack = 112233
-			this.createHarmNum(this.harmNum, attack)
+			// attack = 50
+			this.createHarmNum(harmPrefab, Math.floor(attack/10000))
 			//血条减少
 			this._HP -= attack
 			this.setHPBar(this._HP)
@@ -89,19 +88,30 @@ cc.Class({
 		this._harmCompleted = false
 	},
 
+	onEnable () {
+		cc.director.getCollisionManager().enabled = true;
+	},
+
+	onDisable () {
+		cc.director.getCollisionManager().enabled = false;
+	},
+
 	initExcees () {
 		// 手速+暴击次数
 		this._exceedMap = new Map([[.005, 55],[.01, 70],[.015, 80],[.02, 100],[.03, 130],[.04, 150],[.05, 170],[.06, 205], [.07, 245], [.08, 280], [.09, 300]])
-		this._attackNum = 100
+		this._attackNum = 0
 	},
 
 	initPool () {
 		this._harmNumPool = new cc.NodePool()
+		this._harmNumBoomPool = new cc.NodePool()
 		this._kcoinPool = new cc.NodePool()
 		for (let i = 0; i < this._initPoolCount; ++i) {
 			const harmNum = cc.instantiate(this.harmNum),
+				harmNumBoom = cc.instantiate(this.harmNumBoom),
 				kcoin = cc.instantiate(this.kcoin)
 			this._harmNumPool.put(harmNum)
+			this._harmNumBoomPool.put(harmNumBoom)
 			this._kcoinPool.put(kcoin)
 		}
 	},
@@ -111,8 +121,6 @@ cc.Class({
 		const gainBoom = this.dataStore.getGainBoom() || 0,
 			boom = this._enemyComponent.getBoom() || 0
 		this._totalBoom = gainBoom + boom
-		console.log('getAttack gainBoom', gainBoom)
-		console.log('getAttack boom', boom)
 		console.log('getAttack this._totalBoom', this._totalBoom)
 	},
 
@@ -122,6 +130,7 @@ cc.Class({
 	},
 
 	setExceedLabel () {
+		console.log('setExceedLabel this._attackNum', this._attackNum)
 		if (this._attackNum <= 0) {
 			this.exceedLabel.string = '是本次首战超人!'
 			return
@@ -143,45 +152,41 @@ cc.Class({
 
 	createHarmNum (harmPrefab, attack) {
 		if(!harmPrefab) return
-		let harmNum = null
-		if (this._harmNumPool && this._harmNumPool.size() > 0) {
-			harmNum = this._harmNumPool.get()
-		} else {
-			harmNum = cc.instantiate(harmPrefab)
-		}
+		let pool =  harmPrefab._name==='harm-number'?this._harmNumPool : this._harmNumBoomPool,
+			harmNum = pool&&pool.size()>0? pool.get() : cc.instantiate(harmPrefab)
+		// 设置暴击字体层级最高
+		harmNum.name==='harm-number-boom' && harmNum.setLocalZOrder(1)
 		this.enemy.addChild(harmNum)
 		// 根据伤害构造字体图片
 		this.constructNum(harmNum, attack)
-		harmNum.setPosition(cc.v2(this.enemy.getPosition()))
+		const pos = this.enemy.getPosition()
+		harmNum.setPosition(cc.v2({
+			x: pos.x - 25,
+			y: pos.y + 200
+		}))
 		harmNum.setScale(.5, .5)
 		const fadeIn = cc.fadeIn(.6).easing(cc.easeCubicActionIn()),
 			scale = cc.scaleBy(.8, .8).easing(cc.easeCubicActionOut()),
-			moveUp = cc.moveBy(.3, cc.p(0, 150)),
-			fadeOut = cc.fadeOut(.6).easing(cc.easeCubicActionOut()),
+			moveUp = cc.moveBy(1, cc.p(0, 250)),
+			fadeOut = cc.fadeOut(1.4).easing(cc.easeCubicActionInOut()),
 			sequences = [moveUp, fadeOut]
-		harmNum.runAction(cc.sequence(...sequences, cc.callFunc(function() {
-			this.destoryHarmNum(harmNum)
-		}, this)))
+		// harmNum.runAction(cc.sequence(...sequences, cc.callFunc(function() {
+		// 	this.destoryHarmNum(harmNum)
+		// }, this)))
+		harmNum.runAction(cc.spawn(...sequences))
+		// harmNum.runAction(fadeOut)
 	},
 
 	constructNum (harmNum, attack = 0) {
 		if (!harmNum) return
-		console.log('createHarmNum harmNum', harmNum)
 		let ackArr = (attack+'').split(''),
 			nums = harmNum.children.map(child => child.getComponent(cc.Sprite).spriteFrame)
 		harmNum.children.forEach((child, i) => {
 			if (i < ackArr.length) {
-				console.log('parseInt(ackArr[i])', parseInt(ackArr[i]))
 				child.getComponent(cc.Sprite).spriteFrame = nums[parseInt(ackArr[i])]
 				child.active = true
 			}
 		})
-	},
-
-	destoryHarmNum (harmNum) {
-		if(!harmNum) return
-		this._harmNumPool.put(cc.instantiate(this.harmNum))
-		harmNum.destroy()
 	},
 
 	createKcoin (position) {
@@ -191,7 +196,7 @@ cc.Class({
 		kcoin.setPosition(cc.v2(position))
 		// const	kcoinAnim = kcoin.getComponent(cc.Animation)
 		// kcoinAnim && (kcoinAnim.play('gold'))
-		this._kcoinArray.push(kcoin)
+		// this._kcoinArray.push(kcoin)
 		const x = Math.round(Math.random()* this._randomRange)* (Math.random()>0.5? 1:-1)
 		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
 	},
@@ -216,7 +221,6 @@ cc.Class({
 	setHPBar (hp) {
 		if (hp <0 || hp > this._HPMax) return
 		this._hpComponent.progress = hp / this._HPMax
-		console.log('this._hpComponent', this._hpComponent)
 		const hpVal = this.enemy.getChildByName('HP-val')
 		hpVal.getComponent('cc.Label').string = Math.floor(hp/10000)+'HP/' + Math.floor(this._HPMax/10000)+'HP'
 	},

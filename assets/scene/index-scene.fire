@@ -102,8 +102,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 450,
-      "height": 800
+      "width": 640,
+      "height": 960
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -111,8 +111,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 225,
-      "y": 400
+      "x": 320,
+      "y": 480
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -123,7 +123,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "index-bg",
+    "_name": "list-bg",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -137,7 +137,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "c9NCOoHbROBYi48ALiRitD",
+    "_id": "a0vl0XUBxIkbOL6m4+e1l3",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -159,12 +159,12 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 2.23,
-    "_scaleY": 2.23,
+    "_scaleX": 2.52,
+    "_scaleY": 2.52,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -4,
-      "y": -51
+      "x": 0,
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -182,7 +182,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "141fe0e2-e96d-4534-9d41-219bc486fdb2"
+      "__uuid__": "80ff07b3-a585-43fd-aa83-9956f09ffcf1"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -723,8 +723,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -165,
-      "y": 368
+      "x": -248,
+      "y": 431
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1020,8 +1020,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 400,
-      "height": 30
+      "width": 600,
+      "height": 50
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1029,8 +1029,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -2,
-      "y": 311
+      "x": 0,
+      "y": 301.1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1059,9 +1059,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 8,
-      "g": 18,
-      "b": 247,
+      "r": 247,
+      "g": 8,
+      "b": 46,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -1072,8 +1072,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 400,
-      "height": 30
+      "width": 598,
+      "height": 46
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1081,8 +1081,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -200,
-      "y": 0
+      "x": -299,
+      "y": -1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1151,7 +1151,7 @@
       "__id__": 25
     },
     "_enabled": true,
-    "_N$totalLength": 400,
+    "_N$totalLength": 600,
     "_N$barSprite": {
       "__id__": 27
     },
@@ -1201,8 +1201,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -202,
-      "y": 290
+      "x": -293.6,
+      "y": 278
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1275,8 +1275,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 191,
-      "y": 289
+      "x": 276.9,
+      "y": 278
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1294,8 +1294,8 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 22,
-    "_fontSize": 22,
+    "_actualFontSize": 28,
+    "_fontSize": 28,
     "_lineHeight": 40,
     "_enableWrapText": true,
     "_N$file": null,
@@ -1503,7 +1503,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "49c0777a-c853-4639-8aa4-867eb15ce133"
+      "__uuid__": "d98cf34e-6df4-4239-af42-2ae8f7f7cbbb"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -1914,8 +1914,8 @@
     "_enabled": true,
     "_designResolution": {
       "__type__": "cc.Size",
-      "width": 450,
-      "height": 800
+      "width": 640,
+      "height": 960
     },
     "_fitWidth": true,
     "_fitHeight": false
@@ -1937,6 +1937,7 @@
     "consumeCoinNum": 100,
     "_vm": null,
     "_tips": null,
-    "_showNum": 0
+    "_showNum": 0,
+    "_consumed": null
   }
 ]

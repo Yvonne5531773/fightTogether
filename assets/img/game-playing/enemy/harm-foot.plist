@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>打肚子_00000.png</key>
+            <key>被打肩膀_00000.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -15,97 +15,97 @@
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{0,968},{1102,966}}</string>
+                <string>{{0,966},{1102,966}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>打肚子_00001.png</key>
+            <key>被打肩膀_00001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{7,-8}</string>
+                <string>{6,-6}</string>
                 <key>spriteSize</key>
-                <string>{1138,962}</string>
+                <string>{1112,966}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{1184,0},{1138,962}}</string>
+                <string>{{0,0},{1112,966}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>打肚子_00002.png</key>
+            <key>被打肩膀_00002.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{4,-35}</string>
+                <string>{-31,7}</string>
                 <key>spriteSize</key>
-                <string>{1004,958}</string>
+                <string>{1036,994}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{0,1934},{1004,958}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>打肚子_00003.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{-3,-31}</string>
-                <key>spriteSize</key>
-                <string>{988,968}</string>
-                <key>spriteSourceSize</key>
-                <string>{1280,1280}</string>
-                <key>textureRect</key>
-                <string>{{1928,1928},{988,968}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>打肚子_00004.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,-30}</string>
-                <key>spriteSize</key>
-                <string>{994,970}</string>
-                <key>spriteSourceSize</key>
-                <string>{1280,1280}</string>
-                <key>textureRect</key>
-                <string>{{958,1934},{994,970}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
-            <key>打肚子_00005.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{15,-8}</string>
-                <key>spriteSize</key>
-                <string>{1184,968}</string>
-                <key>spriteSourceSize</key>
-                <string>{1280,1280}</string>
-                <key>textureRect</key>
-                <string>{{0,0},{1184,968}}</string>
+                <string>{{1102,966},{1036,994}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>打肚子_00006.png</key>
+            <key>被打肩膀_00003.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{2,-6}</string>
+                <string>{-34,10}</string>
                 <key>spriteSize</key>
-                <string>{1114,966}</string>
+                <string>{1034,1002}</string>
                 <key>spriteSourceSize</key>
                 <string>{1280,1280}</string>
                 <key>textureRect</key>
-                <string>{{1184,962},{1114,966}}</string>
+                <string>{{0,1960},{1034,1002}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>被打肩膀_00004.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-35,11}</string>
+                <key>spriteSize</key>
+                <string>{1036,1004}</string>
+                <key>spriteSourceSize</key>
+                <string>{1280,1280}</string>
+                <key>textureRect</key>
+                <string>{{2072,1960},{1036,1004}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>被打肩膀_00005.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-30,11}</string>
+                <key>spriteSize</key>
+                <string>{1038,1002}</string>
+                <key>spriteSourceSize</key>
+                <string>{1280,1280}</string>
+                <key>textureRect</key>
+                <string>{{1034,1960},{1038,1002}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>被打肩膀_00006.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{5,-6}</string>
+                <key>spriteSize</key>
+                <string>{1110,966}</string>
+                <key>spriteSourceSize</key>
+                <string>{1280,1280}</string>
+                <key>textureRect</key>
+                <string>{{1112,0},{1110,966}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -119,13 +119,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>harm.webp</string>
+            <string>harm-foot.png</string>
             <key>size</key>
-            <string>{2896,2938}</string>
+            <string>{3108,2964}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:318a7f11e3f9b92019373db51b503d9f:5163e53a825db390633f0e689e76f85f:b290b898f8f7cfdc22765f1f7256838a$</string>
+            <string>$TexturePacker:SmartUpdate:43dad3a4d100beecdd2a0ae6b1fd133d:11d0b5c93ff9e52d2d55d2f5508571b7:da699e043c296a6c63fdc7ef1b979f7c$</string>
             <key>textureFileName</key>
-            <string>harm.webp</string>
+            <string>harm-foot.png</string>
         </dict>
     </dict>
 </plist>

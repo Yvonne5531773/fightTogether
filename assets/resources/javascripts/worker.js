@@ -18,24 +18,7 @@ const getWork = workerize(`
 				url = url + '?' + dataStr;
 			}
 		}
-		if (fetch && method === 'fetch') {
-			let requestConfig = {}
-			if (type === 'POST') {
-				requestConfig.body = JSON.stringify(data)
-				requestConfig.headers = {
-					"content-type": "application/x-www-form-urlencoded",
-					'authorization': authorization
-				}
-				requestConfig.method = 'POST'
-			}
-			try {
-				return fetch(url, requestConfig).then(asJson);
-			} catch (error) {
-				throw new Error(error)
-			}
-		} else {
-			console.log('http')
-			return new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 				var requestObj;
 				if (XMLHttpRequest) {
 					requestObj = new XMLHttpRequest();
@@ -65,8 +48,7 @@ const getWork = workerize(`
 					}
 				}
 				console.log('requestObj', requestObj)
-			})
-		}
+			})		
 	}
 `, { type: 'module' })
 

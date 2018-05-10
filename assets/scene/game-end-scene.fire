@@ -126,7 +126,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "game-end-bg",
+    "_name": "end-bg",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -140,7 +140,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "a41RCx7P1FYLgBzDmxO5iR",
+    "_id": "54spgncAdN9Jrq/Zf+Yt0k",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -162,12 +162,12 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 2.5,
-    "_scaleY": 2.5,
+    "_scaleX": 2.48,
+    "_scaleY": 2.48,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 3,
-      "y": -28
+      "x": 0,
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -185,7 +185,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "fdefa025-bea8-4271-8a0a-b98a5abe83f4"
+      "__uuid__": "6a457e0c-1db9-4498-a7b5-9c86273ecb3d"
     },
     "_type": 0,
     "_sizeMode": 1,

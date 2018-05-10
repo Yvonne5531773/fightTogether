@@ -22,7 +22,13 @@ cc.Class({
 				ani = 'breath';
 				break;
 			case 2:
-				ani = 'harmed';
+				ani = 'harmed-belly';
+				break;
+			case 3:
+				ani = 'harmed-foot';
+				break;
+			case 4:
+				ani = 'harmed-hand';
 				break;
 			default:
 				ani = 'breath';
