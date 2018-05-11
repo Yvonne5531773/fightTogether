@@ -172,13 +172,33 @@ cc.Class({
 	},
 
 	chooseGift (e, eventData) {
-		const gift = this._vm.gift[eventData]
+		const gift = this._vm.gift[eventData],
+			dataStore = this.dataStore
 		this.lotteryPop.active = false
 		this.giftPop.active = true
 		this.giftPop.getChildByName('result').getComponent(cc.Label).string = '获得'+gift.name
 		// 注册点击事件
 		this.node.on("touchstart", this.onTouchStart, this)
 		console.log('in chooseGift gift', gift)
+		const data = {
+			token: dataStore.getToken(),
+			id: gift.id,
+			ts: Date.parse(new Date()),
+			uuid: dataStore.getUuid()
+		}
+		this.pickgift(data).then(res => {
+			console.log('pickgift res', res)
+		})
 	},
 
+	pickgift (data) {
+		const criteria = {
+			path: config.pickgiftPath,
+			data: data,
+			type: 'POST',
+			method: 'http'
+		}
+		console.log('in saveInfo criteria', criteria)
+		return api.fetch(criteria)
+	},
 });
