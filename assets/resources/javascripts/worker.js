@@ -3,7 +3,6 @@ const workerize = require('workerize')
 const getWork = workerize(`
 	export function work(url, data, authorization, type, method) {
 		function asJson(res) {
-			console.log('res', res)
 			res = res.json()
 			return res;
 		}
@@ -47,7 +46,6 @@ const getWork = workerize(`
 						}
 					}
 				}
-				console.log('requestObj', requestObj)
 			})		
 	}
 `, { type: 'module' })

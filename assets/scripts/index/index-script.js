@@ -89,12 +89,14 @@ cc.Class({
 	},
 
 	consumeCoin () {
-		if (this._consumed) return
-		console.log('in consumeCoin')
-		const node = cc.director.getScene().getChildByName('data-store')
-		if(!node) return
+		const node = cc.director.getScene().getChildByName('data-store'),
+			coin = this._vm.user_attrs.coin
+		if(!node || this._consumed || coin<this.consumeCoinNum) return
+		console.log('in consumeCoin this._vm', this._vm)
 		const dataStore = node.getComponent('datastore-script')
 		dataStore.setUseCoin(this.consumeCoinNum)
+		// 目前只有id=1的消耗品表,且没有获取的api
+		dataStore.setBuyId(1)
 		// const randomNumBoth = (Min, Max) => {
 		// 	let Range = Max - Min,
 		// 		Rand = Math.random()

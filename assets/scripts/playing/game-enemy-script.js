@@ -38,7 +38,8 @@ cc.Class({
 	},
 
 	stopAnimate () {
-		this._enemyPlay && this._enemyPlay.stop('breath')
+		console.log('in stopAnimate this._enemyPlay', this._enemyPlay)
+		this._enemyPlay && this._enemyPlay.stop()
 	},
 
 	getHP () {

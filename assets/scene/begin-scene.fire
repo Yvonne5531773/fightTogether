@@ -192,8 +192,16 @@
     },
     "_enabled": true,
     "token": "",
+    "_uuid": "",
+    "enemyId": 0,
+    "harm": 0,
+    "time": 0,
+    "strokes": 0,
     "useCoin": 0,
+    "getCoin": 0,
+    "buyId": 0,
     "gainBoom": 0,
-    "saveInfo": null
+    "saveInfo": null,
+    "gifts": 0
   }
 ]

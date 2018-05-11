@@ -12,8 +12,12 @@ cc.Class({
 		kcoin: cc.Prefab,
 		harmLabel: cc.Label,
 		exceedLabel: cc.Label,
+		hitAudio: '',
+		giftProb: 0,
 		_attack: 0,
 		_harm: 0,
+		_strokes: 0,
+		_getCoin: 0,
 		_kcoinArray: null,
 		_initPoolCount: 10,
 		_attackNum: 0,
@@ -40,18 +44,17 @@ cc.Class({
 		// this._kcoinArray = []
 		this._exceedNum = 0
 		// 金币x坐标随机范围 (0, 100)
-		this._randomRange = 100
+		this._coinRandomRange = 100
 		// 是否受伤动画中
 		this._harmCompleted = false
 	},
 
+	// 有效打击
 	onCollisionEnter (other, self) {
 		const type = this.getAnimateType(self.tag)
-		if (type !== 0 && this._enemyComponent) {
-			// 敌人受伤状态
-			!this._harmCompleted && (
-				this._enemyComponent.animate(type),
-				this._harmCompleted = true)
+		if (!this._harmCompleted && this._enemyComponent && type !== 0) {
+			this._harmCompleted = true
+			this._enemyComponent.animate(type)
 			// 是否暴击
 			const isBoom = this.getBoom()
 			// 暴击后伤害加倍
@@ -67,13 +70,13 @@ cc.Class({
 			this.setExceedLabel()
 			//氪币掉落
 			this.createKcoin(other)
+			// 音效
+			this.audioPlay()
+			// 是否获取礼包
+			this.checkGift()
 		}
-	},
-
-	//受伤动画结束
-	onHarmedAniCompleted () {
-		this._enemyComponent.animate(1)
-		this._harmCompleted = false
+		// 记录碰撞总次数
+		this.dataStore && this.dataStore.setStrokes(this._strokes++)
 	},
 
 	onEnable () {
@@ -82,6 +85,13 @@ cc.Class({
 
 	onDisable () {
 		cc.director.getCollisionManager().enabled = false;
+	},
+
+	//受伤动画结束
+	onHarmedAniCompleted () {
+		// 重置回原始状态
+		this._enemyComponent.animate(1)
+		this._harmCompleted = false
 	},
 
 	initExcees () {
@@ -115,7 +125,7 @@ cc.Class({
 	initHPBar () {
 		this._HP = this._enemyComponent.getHP() || 1
 		this._HPMax = this._enemyComponent.getHPMax() || 1
-		this.setHPBar(this._HP)
+		this.setHPBar()
 	},
 
 	createHarmNum (isBoom, attack) {
@@ -155,8 +165,10 @@ cc.Class({
 		// const	kcoinAnim = kcoin.getComponent(cc.Animation)
 		// kcoinAnim && (kcoinAnim.play('gold'))
 		// this._kcoinArray.push(kcoin)
-		const x = Math.round(Math.random()* this._randomRange)* (Math.random()>0.5? 1:-1)
+		const x = Math.round(Math.random()* this._coinRandomRange)* (Math.random()>0.5? 1:-1)
 		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
+		// 记录氪币掉落次数
+		this.dataStore && this.dataStore.setGetCoin(this._getCoin++)
 	},
 
 	constructNum (harmNum, attack = 0) {
@@ -173,6 +185,7 @@ cc.Class({
 
 	setHarmLabel (attack) {
 		this._harm += attack
+		this.dataStore && this.dataStore.setHarm(this._harm)
 		this.harmLabel.string = '造成伤害' + Math.floor(this._harm/10000)
 	},
 
@@ -197,9 +210,10 @@ cc.Class({
 		this._exceedNum<=this._attackNum && (this.exceedLabel.string = '已超过' + Math.floor(this._exceedNum) + '名超人')
 	},
 
-	setHPBar (attack) {
+	setHPBar (attack = 0) {
 		this._HP -= attack
 		let hp = this._HP
+		console.log('setHPBar hp', hp)
 		if (hp <0 || hp > this._HPMax) return
 		this._hpComponent.progress = hp / this._HPMax
 		const hpVal = this.enemy.getChildByName('HP-val')
@@ -252,6 +266,19 @@ cc.Class({
 		velocity.normalizeSelf()
 		velocity.mulSelf(distance* 2)
 		body.linearVelocity = velocity
+	},
+
+	audioPlay () {
+		cc.audioEngine.play(cc.url.raw('resources/' + this.hitAudio), false, .5)
+	},
+
+	checkGift () {
+		let gifts = this.dataStore?this.dataStore.getGifts():0
+		console.log('checkGift gifts', gifts)
+		if (gifts === 0) {
+			const random = Math.random()
+			random <= this.giftProb && this.dataStore && this.dataStore.setGifts(++gifts)
+		}
 	},
 
 	destoryKcoin (kcoin) {

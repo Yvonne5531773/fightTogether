@@ -84,9 +84,9 @@ cc.Class({
 
 	audioPlay () {
 		if(!this._audioPlayed) {
-			cc.audioEngine.play(cc.url.raw('resources/' + this.actionAudio), false, .5)
+			// cc.audioEngine.play(cc.url.raw('resources/' + this.actionAudio), false, .5)
 			this._audioPlayed = true
 		}
 	},
-	// update (dt) {},
+
 })

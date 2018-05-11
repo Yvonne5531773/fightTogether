@@ -11,8 +11,10 @@ cc.Class({
 
 	onLoad () {
 		this.token = "OJQgKzjBPHEe5BaYQkLOogpm28J13Xbg"
-		this.getInfo(this.token).then(res => {
-			if(!res) return
+		this._uuid = "test"
+		this.getInfo().then(res => {
+			console.log('in begin getInfo res', res)
+			if(!res || !res.data) return
 			this._vm = cc.clone(res.data)
 			// 存储数据
 			this.storeData()
@@ -21,13 +23,13 @@ cc.Class({
 		})
   },
 
-	getInfo (token) {
+	getInfo () {
 		const criteria = {
 			path: config.infoPath,
 			data: {
-				"token": token,
-				"ts": Date.parse(new Date()),
-				"uuid": "test"
+				token: this.token,
+				ts: Date.parse(new Date()),
+				uuid: this._uuid
 			},
 			type: 'POST',
 			method: 'http'
@@ -51,6 +53,7 @@ cc.Class({
 		const node = cc.find('data-store').getComponent('datastore-script')
 		node.setdata(this._vm)
 		node.setToken(this.token)
+		node.setUuid(this._uuid)
 	}
 
 });

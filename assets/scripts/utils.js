@@ -52,5 +52,5 @@ export default {
 		let Range = Max - Min,
 			Rand = Math.random()
 		return Min + Math.round(Rand * Range)
-	}
+	},
 }
