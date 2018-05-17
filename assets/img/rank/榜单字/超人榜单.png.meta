@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "efc0ea2d-1235-4c99-bd12-da4e972533ba",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "超人榜单": {
+      "ver": "1.0.3",
+      "uuid": "a9785554-cbc4-47c3-b010-ba6f4e2d0885",
+      "rawTextureUuid": "efc0ea2d-1235-4c99-bd12-da4e972533ba",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 158,
+      "height": 29,
+      "rawWidth": 158,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

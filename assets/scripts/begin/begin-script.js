@@ -1,6 +1,7 @@
 // require("babel-polyfill")
 const api = require('api'),
-	config = require('config')
+	config = require('config'),
+	util = require('utils')
 
 cc.Class({
 	extends: cc.Component,
@@ -10,9 +11,12 @@ cc.Class({
 	},
 
 	onLoad () {
+		const req = this.getRequest()
 		this.token = "OJQgKzjBPHEe5BaYQkLOogpm28J13Xbg"
 		this._uuid = "test"
-		this.getInfo().then(res => {
+		// this.token = req.token
+		// this._uuid = req.uuid
+		this.getInfo().then(function(res) {
 			console.log('in begin getInfo res', res)
 			if(!res || !res.data) return
 			this._vm = cc.clone(res.data)
@@ -20,8 +24,16 @@ cc.Class({
 			this.storeData()
 			// 导向场景
 			this.toScene()
-		})
+		}.bind(this))
   },
+
+	getRequest () {
+		const request = {}
+		request.token = util.request('token')
+		request.uuid = util.request('uuid')
+		console.log('getRequest request', request)
+		return request
+	},
 
 	getInfo () {
 		const criteria = {

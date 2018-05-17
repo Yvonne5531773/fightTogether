@@ -60,7 +60,7 @@ cc.Class({
 	},
 
 	toPlayScene () {
-		this.toastShow(0, () => {
+		this.toastShow(0, function()  {
 			cc.director.loadScene("game-playing-scene")
 		})
 	},

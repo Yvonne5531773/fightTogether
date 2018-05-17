@@ -53,4 +53,25 @@ export default {
 			Rand = Math.random()
 		return Min + Math.round(Rand * Range)
 	},
+
+	/**
+	 * [request description]
+	 * @param  参数可以为空，此时返回请求参数Map本身
+	 *         参数可以为请求key，以便返回querystring中key对应的value
+	 * @return 根据参数不同，要返回不同的结果，object或者字符串
+	 */
+	request (paras) {
+		let url = location.search,
+			paraString = url.substring(1).split("&"),
+			paraObj = {}
+		for (let i = 0, len = paraString.length; i < len; i++) {
+			let j = paraString[i]
+			if(j) {
+				paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length)
+			}
+		}
+		if(!paras) return paraObj;
+		let returnValue = paraObj[paras.toLowerCase()]
+		return returnValue ? returnValue.trim() : ""
+	}
 }

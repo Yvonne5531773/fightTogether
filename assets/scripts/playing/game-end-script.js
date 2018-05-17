@@ -9,21 +9,20 @@ cc.Class({
 		exceed: cc.Node,
 		rank: cc.Node,
 		enemy: cc.Node,
-		exp: cc.Node,
 		attacker: cc.Node,
 	},
 
 	onLoad () {
 		const ds = cc.director.getScene().getChildByName('data-store')
 		this.dataStore = ds?ds.getComponent('datastore-script'):null
-		this.getResult().then(res => {
+		this.getResult().then(function(res) {
 			if (res.code === 0) {
 				let data
 				res.data && (data = cc.clone(res.data))
 				console.log('in getResult data', data)
 				this.init(data)
 			}
-		})
+		}.bind(this))
 	},
 
 	init (data) {
@@ -37,7 +36,6 @@ cc.Class({
 			this.initRank(rank)
 		}
 		data.enemy && this.initEnemy(data.enemy)
-		data.user_attrs && this.initExp(data.user_attrs)
 	},
 
 	initHarm (val = 0) {
@@ -56,12 +54,6 @@ cc.Class({
 		const hpBar = this.enemy.getChildByName('hp-bar')
 		console.log('enemy.hp / enemy.hp_max', enemy.hp / enemy.hp_max)
 		hpBar.getComponent(cc.ProgressBar).progress = enemy.hp / enemy.hp_max
-	},
-
-	initExp (user) {
-		const expBar = this.exp.getChildByName('exp-bar')
-		console.log('user.exp / user.next_exp', user.exp / user.next_exp)
-		expBar.getComponent(cc.ProgressBar).progress = user.exp / user.next_exp
 	},
 
 	getResult () {

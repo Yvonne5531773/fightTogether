@@ -11,6 +11,7 @@ cc.Class({
 		highlight: cc.Node,
 		tabWidth: 0,
 		tabSwitchDuration: 0,
+		_current: 0,
 	},
 
 	init (main) {
@@ -34,7 +35,7 @@ cc.Class({
 		this.changeHighlight(this.curTabIdx)
 	},
 
-	tabPressed (index) {
+	tabPressed (e, customEventData) {
 		// for (let i = 0; i < this.tabs.length; ++i) {
 		// 	let tab = this.tabs[i];
 		// 	if (tab.index === index) {
@@ -45,8 +46,11 @@ cc.Class({
 		// 		cc.eventManager.resumeTarget(tab.node);
 		// 	}
 		// }
-		this.changeHighlight(index)
+		const index = parseInt(customEventData)
+		if (this._current===index) return
 		console.log('tabPressed index', index)
+		this._current = index
+		this.changeHighlight(index)
 		this.main.switchPanel(index)
 	},
 

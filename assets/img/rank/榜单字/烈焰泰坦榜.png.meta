@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "8e8851b0-ff2f-4bce-b539-aff65933ec80",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "烈焰泰坦榜": {
+      "ver": "1.0.3",
+      "uuid": "a4a9a4aa-5bcc-49a7-81a6-87c6e1a2f6ef",
+      "rawTextureUuid": "8e8851b0-ff2f-4bce-b539-aff65933ec80",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 198,
+      "height": 29,
+      "rawWidth": 198,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

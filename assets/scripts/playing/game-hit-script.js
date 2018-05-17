@@ -140,20 +140,18 @@ cc.Class({
 		this.constructNum(harmNum, attack)
 		const pos = this.enemy.getPosition()
 		harmNum.setPosition(cc.v2({
-			x: pos.x - 25,
+			x: isBoom? pos.x-40 : pos.x-30,
 			y: pos.y + 200
 		}))
-		harmNum.setScale(.5, .5)
-		const fadeIn = cc.fadeIn(.6).easing(cc.easeCubicActionIn()),
-			scale = cc.scaleBy(.8, .8).easing(cc.easeCubicActionOut()),
+		// harmNum.setScale(1, 1)
+		const enlarge = cc.scaleBy(.2, 1.4),
+			reduce = cc.scaleTo(.2, 1),
 			moveUp = cc.moveBy(1, cc.p(0, 250)),
-			fadeOut = cc.fadeOut(1.4).easing(cc.easeCubicActionInOut()),
-			sequences = [moveUp, fadeOut]
-		// harmNum.runAction(cc.sequence(...sequences, cc.callFunc(function() {
-		// 	this.destoryHarmNum(harmNum)
-		// }, this)))
-		harmNum.runAction(cc.spawn(...sequences))
-		// harmNum.runAction(fadeOut)
+			fadeOut = cc.fadeOut(1).easing(cc.easeCubicActionInOut()),
+			fadeOutB = cc.fadeOut(.3).easing(cc.easeCubicActionInOut()),
+			sequences = isBoom? [enlarge, reduce, fadeOutB] : [moveUp, fadeOut]
+		isBoom && harmNum.runAction(cc.sequence(...sequences))
+		!isBoom && harmNum.runAction(cc.spawn(...sequences))
 	},
 
 	createKcoin (other) {
@@ -174,8 +172,10 @@ cc.Class({
 	constructNum (harmNum, attack = 0) {
 		if (!harmNum) return
 		let ackArr = (attack+'').split(''),
-			nums = harmNum.children.map(child => child.getComponent(cc.Sprite).spriteFrame)
-		harmNum.children.forEach((child, i) => {
+			nums = harmNum.children.map(function(child) {
+				return child.getComponent(cc.Sprite).spriteFrame
+			})
+		harmNum.children.forEach(function(child, i) {
 			if (i < ackArr.length) {
 				child.getComponent(cc.Sprite).spriteFrame = nums[parseInt(ackArr[i])]
 				child.active = true

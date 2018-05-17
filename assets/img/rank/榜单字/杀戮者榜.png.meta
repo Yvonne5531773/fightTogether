@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "9325824c-9377-42bf-b41a-f88a524d75e4",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "杀戮者榜": {
+      "ver": "1.0.3",
+      "uuid": "f95cdccd-0d69-4e3d-a0b1-723c66263384",
+      "rawTextureUuid": "9325824c-9377-42bf-b41a-f88a524d75e4",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 157,
+      "height": 29,
+      "rawWidth": 157,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

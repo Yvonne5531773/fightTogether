@@ -5,12 +5,12 @@ const worker = require('worker')
 const server = 'http://10.12.32.183:8080',
 	key = '5e3c172a3af6657f6b2b6fa061f1469b'
 
-const fetch = ({
+const fetch = function ({
 	               path = '',
 	               data = {},
 	               type = 'POST',
 	               method = ''
-               }) => {
+               }) {
 	const authorization = md5.hex_hmac_md5(key, JSON.stringify(data)),
 		url = server + path
 	console.log('fetch authorization', authorization)
@@ -18,7 +18,7 @@ const fetch = ({
 }
 
 // android
-const back2App = () => {
+const back2App = function() {
 	console.log('in back2App')
 	if(typeof GameMatserNative === 'undefined') return
 	try {

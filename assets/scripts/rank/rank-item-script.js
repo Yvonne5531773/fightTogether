@@ -10,7 +10,7 @@ cc.Class({
 			default: null,
 			type: cc.Label
 		},
-		itemID: 0
+		index: 0
 	},
 
 	onLoad () {
@@ -19,10 +19,10 @@ cc.Class({
 		// }, this);
 	},
 
-	updateItem (data, itemId) {
-		this.itemID = itemId
+	updateItem (data, index) {
+		this.index = index
 		console.log('updateItem data', data)
-		this.label.string = 'name:' + data.name
+		this.label.string = 'name:' + data.nickname
 	},
 
 });

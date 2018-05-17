@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "36f66266-2727-4d38-9d1c-a68466565d69",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "控灵者榜": {
+      "ver": "1.0.3",
+      "uuid": "9eddc003-1912-41b6-9f9c-4aa1f0de4e2f",
+      "rawTextureUuid": "36f66266-2727-4d38-9d1c-a68466565d69",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 158,
+      "height": 29,
+      "rawWidth": 158,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

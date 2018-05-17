@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "6ba3706c-b8ee-42ec-a26a-58bccb676b82",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "重锤力士榜": {
+      "ver": "1.0.3",
+      "uuid": "5590beb6-fd28-4307-982f-e879731eb8d5",
+      "rawTextureUuid": "6ba3706c-b8ee-42ec-a26a-58bccb676b82",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 198,
+      "height": 29,
+      "rawWidth": 198,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

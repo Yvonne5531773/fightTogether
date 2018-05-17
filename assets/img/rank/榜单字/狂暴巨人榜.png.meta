@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "419219cc-e458-433f-887e-69a13321d1b7",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "狂暴巨人榜": {
+      "ver": "1.0.3",
+      "uuid": "f3e4bb7a-6679-44ad-a86e-21d7167ccc31",
+      "rawTextureUuid": "419219cc-e458-433f-887e-69a13321d1b7",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 198,
+      "height": 29,
+      "rawWidth": 198,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

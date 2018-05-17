@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "8fc3a49e-0330-4f87-9c9d-c23b24cb155a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "功勋将士榜": {
+      "ver": "1.0.3",
+      "uuid": "72c0e2c7-aa7e-4f1d-8175-d7a550098d7f",
+      "rawTextureUuid": "8fc3a49e-0330-4f87-9c9d-c23b24cb155a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 198,
+      "height": 29,
+      "rawWidth": 198,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

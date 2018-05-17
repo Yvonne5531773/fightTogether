@@ -1,3 +1,5 @@
+const api = require('api'),
+	config = require('config')
 const titleRanks = require('title-rank')
 const totalRanks = require('total-rank')
 const MenuSidebar = require('sidebar-script')
@@ -23,14 +25,17 @@ cc.Class({
 	},
 
 	onLoad () {
+		const ds = cc.director.getScene().getChildByName('data-store')
+		this.dataStore = ds?ds.getComponent('datastore-script') : null
 		this._currentSV = 'title'
+		this.updateTimer = 0
+		this.updateInterval = 0.2
+		this._currankItem = this.currentTemplate.getComponent('rank-item-script')
 		this.sidebar.init(this)
 		// map存储滚动信息
 		this.initMap()
 		// 排行榜信息
 		this.initScrollView(this._currentSV)
-		this.updateTimer = 0
-		this.updateInterval = 0.2
 	},
 
 	initMap () {
@@ -59,38 +64,66 @@ cc.Class({
 
 	// 列表初始化
 	initScrollView (key) {
-		console.log('initScrollView key', key)
 		const sv = this._map.has(key)? this._map.get(key):{}
 		sv.items = []   // 存储实际创建的项数组
-		sv._vm = this.getItem(0, this.minCount, key)
-		sv.currentUser = this.getUser(key)
-		if (sv._vm && sv._vm.length < this.minCount) {
-			sv._totalCount = sv._vm.length
-		} else {
-			sv._totalCount = this.minCount
-		}
-		// 获取整个列表的高度
-		const content = sv.scrollView.content
-		content.height = sv._totalCount * (this.itemTemplate.data.height + this.spacing) + this.spacing
-		for (let i = 0; i < sv._totalCount; ++i) {
-			let item = cc.instantiate(this.itemTemplate.data)
-			content.addChild(item)
-			item.setPosition(0, -item.height * i - this.spacing * (i + 1) + this.yOffest)
-			item.getComponent('rank-item-script').updateItem(sv._vm[i], i)
-			sv.items.push(item)
-		}
-		// 设定缓冲矩形的大小为实际创建项的高度累加，当某项超出缓冲矩形时，则更新该项的显示内容
-		// 若数据的总高度小于设定的scrollview高度，则缓冲区高度用总高度
-		const totalHeight = sv._totalCount* (this.itemTemplate.data.height + this.spacing)
-		sv.bufferZone = totalHeight > sv.scrollView.node.height? totalHeight/ 2 : totalHeight
-		// 当前用户信息
-		this.initCurrent(sv.currentUser)
+		this.getItem(0, this.minCount, key).then(function(res) {
+			console.log('getItem res', res)
+			if (res && res.data) {
+				sv._vm = cc.clone(res.data.rank)
+				if (sv._vm && sv._vm.length < this.minCount) {
+					sv._totalCount = sv._vm.length
+				} else {
+					sv._totalCount = this.minCount
+				}
+				// 获取整个列表的高度
+				const content = sv.scrollView.content
+				content.height = sv._totalCount * (this.itemTemplate.data.height + this.spacing) + this.spacing
+				for (let i = 0; i < sv._totalCount; ++i) {
+					let item = cc.instantiate(this.itemTemplate.data)
+					content.addChild(item)
+					item.setPosition(0, -item.height * i - this.spacing * (i + 1) + this.yOffest)
+					item.getComponent('rank-item-script').updateItem(sv._vm[i], i)
+					sv.items.push(item)
+				}
+				// 设定缓冲矩形的大小为实际创建项的高度累加，当某项超出缓冲矩形时，则更新该项的显示内容
+				// 若数据的总高度小于设定的scrollview高度，则缓冲区高度用总高度
+				const totalHeight = sv._totalCount* (this.itemTemplate.data.height + this.spacing)
+				sv.bufferZone = totalHeight > sv.scrollView.node.height? totalHeight/ 2 : totalHeight
+				// 当前用户信息
+				sv.currentUser = res.data.user_info
+				sv.currentUser.user_rank = res.data.user_rank
+				this.initCurrent(sv.currentUser)
+			}
+		}.bind(this))
 	},
 
 	initCurrent (data) {
 		if (!data) return
-		const current = this.currentTemplate
-		current.getComponent('rank-item-script').updateItem(data, -1)
+		this._currankItem.updateItem(data, -1)
+	},
+
+	updateCurrent (data) {
+		if (!data) return
+		this._currankItem.updateItem(data, -1)
+	},
+
+	getTop (type, min = 0, max = 0) {
+		const dataStore = this.dataStore
+		if (!dataStore) return
+		const path = type===0? config.totalTopPath:config.titleTopPath,
+			criteria = {
+				path: path,
+				data: {
+					token: dataStore.getToken(),
+					ts: Date.parse(new Date()),
+					uuid: dataStore.getUuid(),
+					minIndex: min,
+					maxIndex: max
+				},
+				type: 'POST',
+				method: 'http'
+			}
+		return api.fetch(criteria)
 	},
 
 	// 返回item在ScrollView空间的坐标值
@@ -101,15 +134,7 @@ cc.Class({
 	},
 
 	getItem (min, max, key) {
-		return key==='title'? titleRanks.data.slice(min, max) : totalRanks.data.slice(min, max)
-	},
-
-	getUser (key) {
-		return key==='title'?{
-			name: 'currentusercurrentusercurrentuser'
-		}:{
-			name: '111111111111111111111111111111111'
-		}
+		return key==='title'? this.getTop(0, min, max) : this.getTop(1, min, max)
 	},
 
 	addItem (count, sv) {
@@ -150,17 +175,15 @@ cc.Class({
 		const key = this._currentSV,
 			sv = this._map.has(key)? this._map.get(key):{}
 		if (sv._totalCount < this.minCount) return
-		this.updateTimer += dt;
-		if (this.updateTimer < this.updateInterval) {
-			return
-		}
-		this.updateTimer = 0;
-		let items = sv.items;
+		this.updateTimer += dt
+		if (this.updateTimer < this.updateInterval) return
+		this.updateTimer = 0
+		let items = sv.items
 		// 如果当前content的y坐标小于上次记录值，则代表往下滚动，否则往上。
 		let isDown = sv.scrollView.content.y < sv._lastContentPosY
 		// 实际创建项占了多高（即它们的高度累加）
-		let offset = (this.itemTemplate.data.height + this.spacing) * items.length;
-		let newY = 0
+		let offset = (this.itemTemplate.data.height + this.spacing) * items.length,
+			newY = 0
 		// 遍历数组，更新item的位置和显示
 		for (let i = 0; i < items.length; ++i) {
 			let viewPos = this.getPositionInView(items[i], sv.scrollView)
@@ -171,9 +194,9 @@ cc.Class({
 				// 则更新item的坐标（即上移了一个offset的位置），同时更新item的显示内容
 				if (viewPos.y < -sv.bufferZone && newY < 0) {
 					items[i].setPositionY(newY)
-					let item = items[i].getComponent('rank-item-script')
-					let itemId = item.itemID - items.length
-					item.updateItem(sv._vm[itemId], itemId)
+					let item = items[i].getComponent('rank-item-script'),
+						index = item.index - items.length
+					item.updateItem(sv._vm[index], index)
 				}
 			} else {
 				// 滚动条往下
@@ -184,18 +207,28 @@ cc.Class({
 				// 则更新item的坐标（即下移了一个offset的位置），同时更新item的显示内容
 				if (viewPos.y > sv.bufferZone) {
 					if (sv._addCount <= 0 && sv._totalCount < this.maxCount) {
-						const addData = this.getItem(sv._vm.length, sv._vm.length + this.addCount, key)
-						if (addData && addData.length > 0) {
-							sv._vm = sv._vm.concat(addData)
-							this.addItem(addData.length, sv)
-							sv._addCount = addData.length
-						}
+						this.getItem(sv._vm.length, sv._vm.length + this.addCount, key).then(function(res) {
+							if (res && res.data) {
+								const addData = cc.clone(res.data.rank)
+								if (addData && addData.length > 0) {
+									sv._vm = sv._vm.concat(addData)
+									this.addItem(addData.length, sv)
+									sv._addCount = addData.length
+								}
+							}
+						}.bind(this))
+						// const addData = this.getItem(sv._vm.length, sv._vm.length + this.addCount, key)
+						// if (addData && addData.length > 0) {
+						// 	sv._vm = sv._vm.concat(addData)
+						// 	this.addItem(addData.length, sv)
+						// 	sv._addCount = addData.length
+						// }
 					}
 					if (newY > -sv.scrollView.content.height) {
 						items[i].setPositionY(newY)
-						let item = items[i].getComponent('rank-item-script')
-						let itemId = item.itemID + items.length
-						item.updateItem(sv._vm[itemId], itemId)
+						let item = items[i].getComponent('rank-item-script'),
+							index = item.index + items.length
+						item.updateItem(sv._vm[index], index)
 						sv._addCount--
 					}
 				}

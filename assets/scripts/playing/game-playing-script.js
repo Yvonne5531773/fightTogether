@@ -31,7 +31,7 @@ cc.Class({
 		// 初始化武器
 		this.initKnife(this.knifePrefab)
 		// 初始化倒计时
-		this.initCountDown(this._timeScore = 3)
+		this.initCountDown(this._timeScore = 300)
 		// 开启物理系统
 		cc.director.getPhysicsManager().enabled = true
 		// 加载音乐文件
@@ -155,7 +155,7 @@ cc.Class({
 			}
 		console.log('save data', data)
 		dataStore.setSaveInfo(data)
-		this.saveInfo(data).then(res => {
+		this.saveInfo(data).then(function(res) {
 			console.log('saveinfo res', res)
 		})
 	},
@@ -186,7 +186,7 @@ cc.Class({
 			ts: Date.parse(new Date()),
 			uuid: dataStore.getUuid()
 		}
-		this.pickgift(data).then(res => {
+		this.pickgift(data).then(function(res) {
 			console.log('pickgift res', res)
 		})
 	},

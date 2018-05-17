@@ -9,7 +9,7 @@ const getWork = workerize(`
 		type = type.toUpperCase();
 		if (type === 'GET') {
 			var dataStr = '';
-			Object.keys(data).forEach(key => {
+			Object.keys(data).forEach(function(key) {
 				dataStr += key + '=' + data[key] + '&';
 			})
 			if (dataStr !== '') {
@@ -17,7 +17,7 @@ const getWork = workerize(`
 				url = url + '?' + dataStr;
 			}
 		}
-	return new Promise((resolve, reject) => {
+	return new Promise(function(resolve, reject) {
 				var requestObj;
 				if (XMLHttpRequest) {
 					requestObj = new XMLHttpRequest();
@@ -33,7 +33,7 @@ const getWork = workerize(`
 				requestObj.setRequestHeader("content-type", "application/json");
 				requestObj.setRequestHeader("Authorization", authorization);
 				requestObj.send(sendData);
-				requestObj.onreadystatechange = () => {
+				requestObj.onreadystatechange = function() {
 					if (requestObj.readyState === 4) {
 						if (requestObj.status === 200) {
 							var obj = requestObj.response

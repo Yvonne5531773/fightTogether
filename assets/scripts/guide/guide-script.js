@@ -24,19 +24,19 @@ cc.Class({
 	onLoad () {
     this._delay = [0, .5, 1, 1, 1, 1, 1]
     let i = 0
-		this.typing(this.conversation1, conversations.data[i++].txt, this._delay[i], () => {
+		this.typing(this.conversation1, conversations.data[i++].txt, this._delay[i], function() {
 			this.z0.enabled = true
-			this.typing(this.conversation2, conversations.data[i++].txt, this._delay[i], () => {
+			this.typing(this.conversation2, conversations.data[i++].txt, this._delay[i], function() {
 				this.me1.enabled = true
-				this.typing(this.conversation3, conversations.data[i++].txt, this._delay[i], () => {
+				this.typing(this.conversation3, conversations.data[i++].txt, this._delay[i], function() {
 					this.z1.enabled = true
-					this.typing(this.conversation4, conversations.data[i++].txt, this._delay[i], () => {
+					this.typing(this.conversation4, conversations.data[i++].txt, this._delay[i], function() {
 						this.me2.enabled = true
-						this.typing(this.conversation5, conversations.data[i++].txt, this._delay[i], () => {
+						this.typing(this.conversation5, conversations.data[i++].txt, this._delay[i], function() {
 							this.z2.enabled = true
-							this.typing(this.conversation6, conversations.data[i++].txt, this._delay[i], () => {
+							this.typing(this.conversation6, conversations.data[i++].txt, this._delay[i], function() {
 								this.me3.enabled = true
-								this.typing(this.conversation7, conversations.data[i++].txt, this._delay[i], () => {
+								this.typing(this.conversation7, conversations.data[i++].txt, this._delay[i], function() {
 									console.log('end' + i)
 								})
 							})

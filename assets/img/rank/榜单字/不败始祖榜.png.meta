@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "46702b1a-2028-4279-9241-813fd88506e9",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "不败始祖榜": {
+      "ver": "1.0.3",
+      "uuid": "8d10a3a0-5a5f-4bbd-ae7a-8bee086e70ac",
+      "rawTextureUuid": "46702b1a-2028-4279-9241-813fd88506e9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 198,
+      "height": 29,
+      "rawWidth": 198,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "14d06f66-3fa6-4840-a0e9-2ef40a4e33eb",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "探索者榜": {
+      "ver": "1.0.3",
+      "uuid": "a794df26-9f6f-4a3c-a9d3-7d8278df46e9",
+      "rawTextureUuid": "14d06f66-3fa6-4840-a0e9-2ef40a4e33eb",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 158,
+      "height": 29,
+      "rawWidth": 158,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

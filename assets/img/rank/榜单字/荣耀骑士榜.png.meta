@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "3211d7a7-862a-446d-b3f0-672d79cb575f",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "荣耀骑士榜": {
+      "ver": "1.0.3",
+      "uuid": "013f0fc7-46cc-4713-b893-e028fa587565",
+      "rawTextureUuid": "3211d7a7-862a-446d-b3f0-672d79cb575f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 198,
+      "height": 29,
+      "rawWidth": 198,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

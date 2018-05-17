@@ -20,13 +20,13 @@ cc.Class({
   },
 
 	changeTabBtn (bool) {
-		this.tabBar.children.forEach(c => {
+		this.tabBar.children.forEach(function(c) {
 			c.getComponent(cc.Button) && (c.getComponent(cc.Button).interactable = bool)
 		})
 	},
 
 	changeScrollViews (bool) {
-		this.scrollViews.children.forEach(s => {
+		this.scrollViews.children.forEach(function(s) {
 			s.getComponent(cc.ScrollView) && (s.getComponent(cc.ScrollView).vertical = bool)
 		})
 	},

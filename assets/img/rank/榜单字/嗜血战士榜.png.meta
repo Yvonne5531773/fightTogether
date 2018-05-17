@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "654122ed-ada9-4ad3-956e-8cec8b399638",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "嗜血战士榜": {
+      "ver": "1.0.3",
+      "uuid": "0edb0898-3f18-4638-a45e-d079b25e895b",
+      "rawTextureUuid": "654122ed-ada9-4ad3-956e-8cec8b399638",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 198,
+      "height": 29,
+      "rawWidth": 198,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

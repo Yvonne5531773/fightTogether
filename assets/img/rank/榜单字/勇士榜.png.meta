@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "c77c248a-33c4-4f28-8d5e-d0f7d61aa021",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "勇士榜": {
+      "ver": "1.0.3",
+      "uuid": "08e9e953-981f-4efb-a5b4-ee8bd2ae7cda",
+      "rawTextureUuid": "c77c248a-33c4-4f28-8d5e-d0f7d61aa021",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 118,
+      "height": 29,
+      "rawWidth": 118,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

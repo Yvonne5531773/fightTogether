@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "20b27cbb-c1f3-46a6-b22a-1ba645ec8b3b",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "诛神者榜": {
+      "ver": "1.0.3",
+      "uuid": "6d44c6b5-b5e6-40fc-b4fe-e2be31b1c126",
+      "rawTextureUuid": "20b27cbb-c1f3-46a6-b22a-1ba645ec8b3b",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 158,
+      "height": 29,
+      "rawWidth": 158,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
