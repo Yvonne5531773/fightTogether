@@ -7,6 +7,8 @@ cc.Class({
 	properties: {
 		enemy: cc.Node,
 		toast: cc.Node,
+		btns: cc.Node,
+		time3s: cc.Node,
 		consumeCoinNum: 0,
 		_vm: null,
 		_tips: null,
@@ -56,10 +58,12 @@ cc.Class({
 		nameStr && (nameStr.string = data.name)
 		hpBarVal && (hpBarVal.progress = data.hp/data.hp_max)
 		hpVal && (data.hp_max>=data.hp) && (hpVal.string = Math.floor(data.hp/10000)+'HP/' + Math.floor(data.hp_max/10000)+'HP')
-		attackNum && (data.attack_user_num = data.attack_user_num>=0?data.attack_user_num:0) && (attackNum.string = '该怪兽已被'+Math.floor(data.attack_user_num)+'人攻击')
+		attackNum && (data.attack_user_num = data.attack_user_num>=0?data.attack_user_num:0) && (attackNum.string = Math.floor(data.attack_user_num))
 	},
 
 	toPlayScene () {
+		console.log('this.btns', this.btns)
+		this.btns && (this.btns.active = false)
 		this.toastShow(0, function()  {
 			cc.director.loadScene("game-playing-scene")
 		})
@@ -73,18 +77,22 @@ cc.Class({
 		this.toast.active = true
 		let self = this,
 			step = this._showNum,
-			timeLabel = this.toast.getChildByName('time').getComponent('cc.Label'),
-			tipLabel = this.toast.getChildByName('tip').getComponent('cc.Label')
-		timeLabel.string = step + ''
-		tipLabel.string = this._tips[step-- - 1]
+			timeLabel = this.time3s.getComponent('cc.Label'),
+			tipLabel = this.toast.getChildByName('tip').getComponent('cc.Label'),
+			enlarge = cc.scaleBy(.2, 1.4),
+			reduce = cc.scaleTo(.2, 1),
+			sequences = [enlarge, reduce]
 		self.func = function () {
 			timeLabel.string = step + ''
 			tipLabel.string = this._tips[step - 1]
+			this.time3s.setScale(0, 0)
+			this.time3s.runAction(cc.sequence(...sequences))
 			if (--step === 0) {
 				self.unschedule(self.func, self)
 				cb && cb()
 			}
 		}
+		self.func()
 		self.schedule(self.func, 1, cc.macro.REPEAT_FOREVER, delay)
 	},
 
