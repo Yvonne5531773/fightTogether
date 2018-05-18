@@ -79,13 +79,13 @@ cc.Class({
 			step = this._showNum,
 			timeLabel = this.time3s.getComponent('cc.Label'),
 			tipLabel = this.toast.getChildByName('tip').getComponent('cc.Label'),
-			enlarge = cc.scaleBy(.2, 1.4),
-			reduce = cc.scaleTo(.2, 1),
+			enlarge = cc.scaleBy(.3, 1.4),
+			reduce = cc.scaleTo(.3, 1),
 			sequences = [enlarge, reduce]
 		self.func = function () {
 			timeLabel.string = step + ''
 			tipLabel.string = this._tips[step - 1]
-			this.time3s.setScale(0, 0)
+			// this.time3s.setScale(0, 0)
 			this.time3s.runAction(cc.sequence(...sequences))
 			if (--step === 0) {
 				self.unschedule(self.func, self)
