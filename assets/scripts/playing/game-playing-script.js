@@ -1,16 +1,20 @@
 const api = require('api'),
-	config = require('config')
+	config = require('config'),
+	Result = require('game-result-script')
 
 cc.Class({
 	extends: cc.Component,
 
 	properties: {
 		enemy: cc.Node,
-		normalPop: cc.Node,
+		popup: cc.Node,
 		lotteryPop: cc.Node,
-		giftPop: cc.Node,
+		coinPop: cc.Node,
 		knifePrefab: cc.Prefab,
-		timeLabel: cc.Label,
+		countDown: cc.Node,
+		secondLabel: cc.Label,
+		milliSecondLabel: cc.Label,
+		result: Result,
 		knifeScript: '',
 		knifeCtr: {
 			type: cc.Node,
@@ -31,7 +35,7 @@ cc.Class({
 		// 初始化武器
 		this.initKnife(this.knifePrefab)
 		// 初始化倒计时
-		this.initCountDown(this._timeScore = 300)
+		this.initCountDown(this._timeScore = 3)
 		// 开启物理系统
 		cc.director.getPhysicsManager().enabled = true
 		// 加载音乐文件
@@ -44,8 +48,12 @@ cc.Class({
 	onTouchStart (e) {
 		e.stopPropagation()
 		this.node.off("touchstart", this.onTouchStart, this)
-		//跳转到结束场景
-		cc.director.loadScene("game-end-scene")
+		// 弹出结束结果框
+		// cc.director.loadScene("game-end-scene")
+		this.popup.getChildByName('end').active = false
+		this.popup.getChildByName('result').active = true
+		console.log('onTouchStart result', this.result)
+		this.result.init(this)
 	},
 
 	onLoadCompleted (err, res) {
@@ -66,30 +74,39 @@ cc.Class({
 	initCountDown (time) {
 		this.setTimeLabel(time)
 		this.dataStore && this.dataStore.setTime(time)
-		let count = time
-		this.countdown = function () {
+		let count = time* 100
+		const countdown = setInterval(function () {
+			count--
+			const ss = Math.floor(count/ 100),
+				ms = count - Math.floor(count/ 100)* 100
 			if (count <= 0) {
 				this.endGame()
-				this.unschedule(this.countdown, this)
+				clearInterval(countdown)
 			}
-			this.setTimeLabel(count--)
-		}
-		this.schedule(this.countdown, 1, cc.macro.REPEAT_FOREVER, 0)
+			this.setTimeLabel(ss, ms)
+		}.bind(this), 10)
 	},
 
 	initEndPop () {
+		this.popup.active = true
 		if (!this.dataStore) return
 		const gifts = this.dataStore.getGifts() || 0,
 			getCoin = this.dataStore.getGetCoin() || 0
 		console.log('initEndPop getCoin', getCoin)
 		if (gifts > 0) {
-			this.lotteryPop.getChildByName('result-txt').getComponent(cc.Label).string = '恭喜你获得'+getCoin+'氪币和'+gifts+'个礼包'
+			const frame = this.lotteryPop.getChildByName('frame'),
+				coin = frame.getChildByName('result-coin').getComponent(cc.Label),
+				gift = frame.getChildByName('result-gift').getComponent(cc.Label)
+			coin.string = getCoin+''
+			gift.string = gifts+''
 			this.lotteryPop.active = true
 		} else {
 			// 注册点击事件
+			const frame = this.coinPop.getChildByName('frame')
 			this.node.on("touchstart", this.onTouchStart, this)
-			this.normalPop.getChildByName('result-txt').getComponent(cc.Label).string = '恭喜你获得'+getCoin+'氪币'
-			this.normalPop.active = true
+			console.log('initEndPop frame getChildByName(\'result-coin\')', frame.getChildByName('result-coin'))
+			frame.getChildByName('result-coin').getComponent(cc.Label).string = getCoin+''
+			this.coinPop.active = true
 		}
 	},
 
@@ -101,15 +118,22 @@ cc.Class({
 		return cc.clone(data)
 	},
 
-	setTimeLabel (time) {
-		this.timeLabel.string = time + 's'
+	setTimeLabel (ss='00', ms='00') {
+		this.secondLabel.string = Math.floor(ss/10)<=0? '0'+ss : ''+ss
+		this.milliSecondLabel.string = Math.floor(ms/10)<=0? '0'+ms : ''+ms
+		// let count = 100
+		// this.func = function () {
+		// 	this.milliSecondLabel.string = --count+''
+		// 	count === 0 && this.unschedule(this.func, this)
+		// }
+		// this.schedule(this.func, 0.01, cc.macro.REPEAT_FOREVER, 0)
 	},
 
 	setEnemy (data) {
 		if(!data) return
-		const name = this.enemy.getChildByName('name'),
-			bar = this.enemy.getChildByName('HP-bar'),
-			hp = this.enemy.getChildByName('HP-val'),
+		const bar = this.enemy.getChildByName('head').getChildByName('HP-bar'),
+			hp = bar.getChildByName('HP-val'),
+			name = bar.getChildByName('name'),
 			nameStr = name? name.getComponent('cc.Label') : null,
 			hpBarVal = bar? bar.getComponent('cc.ProgressBar') : null,
 			hpVal = hp? hp.getComponent('cc.Label') : null
@@ -122,6 +146,22 @@ cc.Class({
 		enemy.setHP(data.enemy.hp)
 		enemy.setHPMax(data.enemy.hp_max)
 		enemy.setBoom(data.user_attrs.boom / 10000)
+		this.setHPBar(bar, data.enemy)
+	},
+
+	setHPBar (bar, enemy) {
+		if (!bar) return
+		console.log('in setHPBar enemy', enemy)
+		const full = bar.getChildByName('full'),
+			reduce = bar.getChildByName('reduce'),
+			progress = bar.getComponent('cc.ProgressBar')
+		if (enemy.hp_max >= enemy.hp) {
+			reduce.active = true
+			progress.barSprite = reduce
+		} else {
+			full.active = true
+			progress.barSprite = full
+		}
 	},
 
 	endGame () {
@@ -133,6 +173,10 @@ cc.Class({
 		this.knifeCtr.destroy()
 		// saveInfo上报数据
 		this.save()
+		// 销毁倒计时
+		this.countDown && this.countDown.destroy()
+		// 销毁血条
+		this.enemy.getChildByName('head').destroy()
 	},
 
 	save () {
@@ -167,16 +211,28 @@ cc.Class({
 			type: 'POST',
 			method: 'http'
 		}
-		console.log('in saveInfo criteria', criteria)
 		return api.fetch(criteria)
 	},
 
 	chooseGift (e, eventData) {
 		const gift = this._vm.gift[eventData],
-			dataStore = this.dataStore
-		this.lotteryPop.active = false
-		this.giftPop.active = true
-		this.giftPop.getChildByName('result').getComponent(cc.Label).string = '获得'+gift.name
+			dataStore = this.dataStore,
+			cases = this.lotteryPop.getChildByName('cases'),
+			choosed = this.lotteryPop.getChildByName('choose-gift'),
+			tip1 = this.lotteryPop.getChildByName('tip1'),
+			tip2 = this.lotteryPop.getChildByName('tip2'),
+			name = this.lotteryPop.getChildByName('frame').getChildByName('name'),
+			giftSprite = choosed.getChildByName('gift').getComponent(cc.Sprite)
+		cases.active = false
+		choosed.active = true
+		tip1.active = false
+		tip2.active = true
+		name.getComponent(cc.Label).string = gift.name+'！'
+		console.log('chooseGift gift', gift)
+		cc.loader.load(gift.pic, function(err, texture) {
+			console.log('chooseGift texture', texture)
+			giftSprite.setTexture(texture)
+		})
 		// 注册点击事件
 		this.node.on("touchstart", this.onTouchStart, this)
 		console.log('in chooseGift gift', gift)

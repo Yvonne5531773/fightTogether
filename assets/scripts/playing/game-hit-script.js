@@ -10,8 +10,10 @@ cc.Class({
 		harmNum: cc.Prefab,
 		harmNumBoom: cc.Prefab,
 		kcoin: cc.Prefab,
-		harmLabel: cc.Label,
-		exceedLabel: cc.Label,
+		harmVal: cc.Label,
+		exceedVal: cc.Label,
+		first: cc.Node,
+		exceed: cc.Node,
 		hitAudio: '',
 		giftProb: 0,
 		_attack: 0,
@@ -97,7 +99,7 @@ cc.Class({
 	initExcees () {
 		// 手速+暴击次数
 		this._exceedMap = new Map([[.005, 55],[.01, 70],[.015, 80],[.02, 100],[.03, 130],[.04, 150],[.05, 170],[.06, 205], [.07, 245], [.08, 280], [.09, 300]])
-		this._attackNum = 0
+		this._attackNum = this._enemyComponent.getAttackNum()
 	},
 
 	initPool () {
@@ -166,7 +168,7 @@ cc.Class({
 		const x = Math.round(Math.random()* this._coinRandomRange)* (Math.random()>0.5? 1:-1)
 		this.emitTo(kcoin.getComponent('cc.RigidBody'), {x: x, y: 400})
 		// 记录氪币掉落次数
-		this.dataStore && this.dataStore.setGetCoin(this._getCoin++)
+		this.dataStore && this.dataStore.setGetCoin(++this._getCoin)
 	},
 
 	constructNum (harmNum, attack = 0) {
@@ -186,14 +188,18 @@ cc.Class({
 	setHarmLabel (attack) {
 		this._harm += attack
 		this.dataStore && this.dataStore.setHarm(this._harm)
-		this.harmLabel.string = '造成伤害' + Math.floor(this._harm/10000)
+		this.harmVal.string = Math.floor(this._harm/10000)
 	},
 
 	setExceedLabel () {
 		console.log('setExceedLabel this._attackNum', this._attackNum)
 		if (this._attackNum <= 0) {
-			this.exceedLabel.string = '是本次首战超人!'
+			this.first.active = true
+			this.exceed.active = false
 			return
+		} else {
+			this.first.active = false
+			this.exceed.active = true
 		}
 		const knife = this.knifeCtr.getChildByName('knife').getComponent('game-knife-script'),
 			ss = knife? knife.getScratchSpeed() : 0
@@ -207,7 +213,7 @@ cc.Class({
 		}
 		num = this._attackNum>1? (this._attackNum>=100? Math.ceil(this._attackNum* percent):this._attackNum* percent): (percent>.06? 1:0)
 		this._exceedNum += num* threshold
-		this._exceedNum<=this._attackNum && (this.exceedLabel.string = '已超过' + Math.floor(this._exceedNum) + '名超人')
+		this._exceedNum<=this._attackNum && (this.exceedVal.string = Math.floor(this._exceedNum))
 	},
 
 	setHPBar (attack = 0) {
@@ -216,8 +222,8 @@ cc.Class({
 		console.log('setHPBar hp', hp)
 		if (hp <0 || hp > this._HPMax) return
 		this._hpComponent.progress = hp / this._HPMax
-		const hpVal = this.enemy.getChildByName('HP-val')
-		hpVal.getComponent('cc.Label').string = Math.floor(hp/10000)+'HP/' + Math.floor(this._HPMax/10000)+'HP'
+		const hpVal = this.hpBar.getChildByName('HP-val')
+		hpVal.getComponent('cc.Label').string = Math.floor(hp/10000)+'HP / ' + Math.floor(this._HPMax/10000)+'HP'
 	},
 
 	getAttack () {

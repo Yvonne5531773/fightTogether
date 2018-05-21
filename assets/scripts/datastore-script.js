@@ -97,8 +97,9 @@ cc.Class({
 		return this.getCoin
 	},
 
-	setGetCoin (getCoin){
-		this.getCoin = getCoin
+	setGetCoin (coin){
+		console.log('setGetCoin coin', coin)
+		this.getCoin = coin
 	},
 
 	getBuyId (){
